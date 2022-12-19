@@ -3,12 +3,14 @@
 
   hosts: localhost
   connection: local
+  gather_facts: true
+  become: yes
+
   vars:
     ansible_python_interpreter: /usr/bin/python3
     plugin_install_manager_tool_version: '2.12.9'
-
-  gather_facts: true
-  become: yes
+  vars_files:
+    - vars/jenkins_sectets.yml
   
   handlers:
     - name: restart jenkins
@@ -43,7 +45,9 @@
     - name: Configure jenkins
       copy:
         dest: /etc/systemd/system/jenkins.service.d/override.conf
-        content: 'Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+        content: |
+          [Service]
+          Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"
         mode: 0644
       notify: restart jenkins
 
