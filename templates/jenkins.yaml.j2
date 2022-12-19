@@ -8,30 +8,30 @@ jenkins:
         - id: "{{ jenkins_admin_username }}"
           password: "{{ jenkins_admin_password }}"
   authorizationStrategy: loggedInUsersCanDoAnything
-  jobs:
+jobs:
   - script: >
-      multibranchPipelineJob('example-2') {
-        branchSources {
-          branchSource {
-            source {
-              git {
-                remote('https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository')
-                credentialsId('git_repository_ssh_key')
-              }
+    multibranchPipelineJob('example-2') {
+      branchSources {
+        branchSource {
+          source {
+            git {
+              remote('https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository')
+              credentialsId('git_repository_ssh_key')
             }
-            strategy {
-              namedExceptionsBranchPropertyStrategy {          
-                defaultProperties {
-                  noTriggerBranchProperty()
-                  ansicolor('xterm')
-                }
-                namedExceptions {
-                  named {
-                    name('jenkins-ignore')
-                  }
+          }
+          strategy {
+            namedExceptionsBranchPropertyStrategy {          
+              defaultProperties {
+                noTriggerBranchProperty()
+                ansicolor('xterm')
+              }
+              namedExceptions {
+                named {
+                  name('jenkins-ignore')
                 }
               }
             }
           }
         }
       }
+    }
