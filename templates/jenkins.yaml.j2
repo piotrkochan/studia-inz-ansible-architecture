@@ -1,5 +1,5 @@
 jenkins:
-  systemMessage: "Welcome to the Jenkins instance"
+  systemMessage: "<h2>Jenkins Piotr Kochan</h2><p>To jest <strong>automatycznie</strong> wygenerowana instancja Jenkinsa.</p>"
   numExecutors: {{ numExecutors | default(2) }}
   securityRealm:
     local:
@@ -8,7 +8,7 @@ jenkins:
         - id: "{{ jenkins_admin_username }}"
           password: "{{ jenkins_admin_password }}"
   authorizationStrategy: loggedInUsersCanDoAnything
-jobs:
+{# jobs:
   - script: >
     multibranchPipelineJob('example-2') {
       branchSources {
@@ -34,4 +34,4 @@ jobs:
           }
         }
       }
-    }
+    } #}
