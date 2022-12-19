@@ -1,0 +1,12 @@
+plugin: aws_ec2
+regions:
+  - eu-central-1
+filters:
+  instance-state-name: running
+compose:
+  ansible_host: instance_id
+    #  ansible_host: private_ip_address
+  groups:
+    - app: instance_tags.Application
+group_by:
+  - app

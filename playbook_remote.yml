@@ -1,0 +1,36 @@
+---
+- hosts: all
+  vars:
+    ansible_connection: aws_ssm
+    ansible_aws_ssm_region: eu-central-1
+    ansible_aws_ssm_bucket_name: testbucketkochan22
+    ansible_python_interpreter: /usr/bin/python3
+  gather_facts: true
+  become: yes
+  tasks:
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: Install JaC plugin
+      shell: /usr/bin/jenkins-cli -s http://localhost:8080 install-plugin jac-plugin
+
+    - name: Copy JaC configuration to Jenkins home directory
+      copy:
+        dest: /var/lib/jenkins/jac/config.yml
+        content: | 
+        jenkins:
+          systemMessage: "Welcome to the Jenkins instance"
+          numExecutors: 2
+
+    # - name: Create example JobDSL configuration
+    #   copy:
+    #     src: jobdsl_config.groovy
+    #     dest: /var/lib/jenkins/init.groovy.d/jobdsl_config.groovy
+    #   become: yes
+
+    - name: Restart Jenkins
+      service:
+        name: jenkins
+        state: restarted

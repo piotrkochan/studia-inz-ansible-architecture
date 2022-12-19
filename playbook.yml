@@ -1,0 +1,62 @@
+---
+- hosts: localhost
+  connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    plugin_install_manager_tool_version: '2.12.9'
+  gather_facts: true
+  become: yes
+  tasks:
+    - name: Download Jenkins repository configuration
+      get_url:
+       url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+       dest: /etc/yum.repos.d/jenkins.repo
+
+    - name: Import Jenkins repository key
+      rpm_key:
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+        state: present
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+
+    - name: Ensure jenkins_init_folder exists.
+      file:
+        path: "/etc/systemd/system/jenkins.service.d"
+        state: directory
+        mode: 0644
+
+    - name: Configure jenkins
+      copy:
+        dest: /etc/systemd/system/jenkins.service.d/override.conf
+        content: 'Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+        mode: 0644
+
+    - name: Restart Jenkins
+      service:
+        name: jenkins
+        daemon_reload: yes
+        state: restarted
+
+    - name: Download Plugin installation manager tool
+      get_url:
+        url: "https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/{{ plugin_install_manager_tool_version }}/jenkins-plugin-manager-{{  plugin_install_manager_tool_version }}.jar"
+        dest: /usr/share/jenkins/plugin-installer.jar
+        mode: 0755
+
+    - name: Create plugins template
+      template:
+        src: plugins.txt.j2
+        dest: /var/lib/jenkins/plugins.txt
+        mode: 0644
+
+    - name: Install plugins
+      shell: /usr/bin/java -jar /usr/share/jenkins/plugin-installer.jar --war /usr/share/java/jenkins.war --plugin-download-directory /var/lib/jenkins/plugins --plugin-file /var/lib/jenkins/plugins.txt
+
+    - name: Create jenkins as code configuration
+      template:
+        src: jenkins.yaml.j2
+        dest: /var/lib/jenkins/jenkins.yaml
+        mode: 0644
