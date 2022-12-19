@@ -90,7 +90,7 @@
     - name: Create credential script
       template:
         src: credentials.groovy.j2
-        dest: /var/lib/jenkins/init.groovy.d/configure_jenkins_credentials.groovy"
+        dest: /var/lib/jenkins/init.groovy.d/configure_jenkins_credentials.groovy
         mode: 0640
         owner: jenkins
         group: jenkins
