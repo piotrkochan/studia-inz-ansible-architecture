@@ -90,6 +90,7 @@
         owner: jenkins
         group: jenkins
         mode: 0550
+      notify: restart jenkins
 
     - name: Create credential script
       template:
