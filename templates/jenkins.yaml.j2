@@ -8,3 +8,28 @@ jenkins:
         - id: "{{ jenkins_admin_username }}"
           password: "{{ jenkins_admin_password }}"
   authorizationStrategy: loggedInUsersCanDoAnything
+  jobs:
+  - script: >
+    teamFolder("ansible-playbooks") {
+      displayName("Ansible playbooks")
+      description("Repozytorium uruchamia playbooki ansible do konfigurowania architektury")
+
+      multibranchPipelineJob("${repoName}") {
+        displayName("Ansible: ${repoName}")
+        description("Automatycznie budowane branche i pull requesty dle repozytorium *'${repoName}'*.")
+        source {
+          git {
+            remote("ssh://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository")
+            credentialsId('git_repository_ssh_key')
+          }
+        }
+        properties {
+          pipelineTriggers {
+            timer("H/5 * * * *")
+          }
+        }
+        options {
+          ansicolor('xterm')
+        }
+      }
+    }

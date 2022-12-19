@@ -77,4 +77,23 @@
         src: jenkins.yaml.j2
         dest: /var/lib/jenkins/jenkins.yaml
         mode: 0644
+        owner: jenkins
+        group: jenkins
+      notify: restart jenkins
+
+    - name: Create init.groovy.d directory
+      file:
+        path: /var/lib/jenkins/init.groovy.d
+        state: directory
+        owner: jenkins
+        group: jenkins
+        mode: 0640
+
+    - name: Create credential script
+      template:
+        src: credentials.groovy.j2
+        dest: /var/lib/jenkins/init.groovy.d/configure_jenkins_credentials.groovy"
+        mode: 0640
+        owner: jenkins
+        group: jenkins
       notify: restart jenkins
