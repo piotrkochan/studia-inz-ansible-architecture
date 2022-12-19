@@ -70,6 +70,10 @@
       shell: /usr/bin/java -jar /usr/share/jenkins/plugin-installer.jar --war /usr/share/java/jenkins.war --plugin-download-directory /var/lib/jenkins/plugins --plugin-file /var/lib/jenkins/plugins.txt
       changed_when: false
 
+    - name: Fix plugins credentials
+      shell: chown -R jenkins:jenkins /var/lib/jenkins/plugins
+      changed_when: false
+
     - name: Create Jenkins as code configuration
       template:
         src: jenkins.yaml.j2
