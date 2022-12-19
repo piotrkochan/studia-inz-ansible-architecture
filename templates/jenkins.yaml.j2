@@ -14,9 +14,9 @@ jenkins:
       displayName("Ansible playbooks")
       description("Repozytorium uruchamia playbooki ansible do konfigurowania architektury")
 
-      multibranchPipelineJob("${repoName}") {
-        displayName("Ansible: ${repoName}")
-        description("Automatycznie budowane branche i pull requesty dle repozytorium *'${repoName}'*.")
+      multibranchPipelineJob("ansible") {
+        displayName("Ansible")
+        description("Automatycznie budowane branche i pull requesty dle repozytorium *ansible*.")
         source {
           git {
             remote("ssh://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository")
