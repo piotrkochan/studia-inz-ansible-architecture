@@ -8,6 +8,17 @@ jenkins:
         - id: "{{ jenkins_admin_username }}"
           password: "{{ jenkins_admin_password }}"
   authorizationStrategy: loggedInUsersCanDoAnything
+jobs:
+  - script: >
+      multibranchPipelineJob('configuration-as-code') {
+        branchSources {
+          git {
+            id = 'configuration-as-code'
+            remote('https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository')
+            credentialsId('git_repository_ssh_key')
+          }
+        }
+      }
 {# jobs:
   - script: >
     multibranchPipelineJob('example-2') {
