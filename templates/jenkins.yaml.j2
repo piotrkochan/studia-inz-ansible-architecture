@@ -8,57 +8,30 @@ jenkins:
         - id: "{{ jenkins_admin_username }}"
           password: "{{ jenkins_admin_password }}"
   authorizationStrategy: loggedInUsersCanDoAnything
-jobs:
-- script: >
-    multibranchPipelineJob("ansible") {
-      displayName("Ansible")
-      description("Automatycznie budowane branche i pull requesty dle repozytorium *ansible*.")
-      source {
-        git {
-          remote("ssh://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository")
-          credentialsId('git_repository_ssh_key')
+  jobs:
+  - script: >
+      multibranchPipelineJob('example-2') {
+        branchSources {
+          branchSource {
+            source {
+              git {
+                remote('https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository')
+                credentialsId('git_repository_ssh_key')
+              }
+            }
+            strategy {
+              namedExceptionsBranchPropertyStrategy {          
+                defaultProperties {
+                  noTriggerBranchProperty()
+                  ansicolor('xterm')
+                }
+                namedExceptions {
+                  named {
+                    name('jenkins-ignore')
+                  }
+                }
+              }
+            }
+          }
         }
       }
-      properties {
-        pipelineTriggers {
-          timer("H/5 * * * *")
-        }
-      }
-      options {
-        ansicolor('xterm')
-      }
-    }
-    // znaleziono tutaj:
-    // https://gitter.im/jenkinsci/configuration-as-code-plugin?at=5fb79a936a738b71d351c2d0
-    configure { node ->
-      def traits = node / navigators / 'com.cloudbees.jenkins.plugins.bitbucket.BitbucketSCMNavigator' / traits
-      // Discover branches
-      traits << 'com.cloudbees.jenkins.plugins.bitbucket.BranchDiscoveryTrait' {
-          strategyId('1')
-          // Values
-          //  1 : Exclude branches that are also filed as PRs
-          //  2 : Only branches that are also filed as PRs
-          //  3 : All branches
-      }
-      // Discover pull requests from origin
-      traits << 'com.cloudbees.jenkins.plugins.bitbucket.OriginPullRequestDiscoveryTrait' {
-          strategyId('1')
-          // Values
-          // 1 : Merging the pull request with the current target branch revision
-          // 2 : The current pull request revision
-          // 3 : Both the current pull request revision and the pull request merged with the current target branch revision
-      }
-      // Discover pull requests from forks
-      traits << 'com.cloudbees.jenkins.plugins.bitbucket.ForkPullRequestDiscoveryTrait' {
-          strategyId('1')
-          // Values
-          // 1 : Merging the pull request with the current target branch revision
-          // 2 : The current pull request revision
-          // 3 : Both the current pull request revision and the pull request merged with the current target branch revision
-          trustID('0')
-          // Values
-          // 0 : Everyone
-          // 1 : Forks in the same account
-          // 2 : Nobody
-      }
-    }
