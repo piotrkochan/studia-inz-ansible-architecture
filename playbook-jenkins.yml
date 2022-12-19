@@ -89,13 +89,13 @@
         state: directory
         owner: jenkins
         group: jenkins
-        mode: 0640
+        mode: 0550
 
     - name: Create credential script
       template:
         src: credentials.groovy.j2
         dest: /var/lib/jenkins/init.groovy.d/configure_jenkins_credentials.groovy
-        mode: 0640
+        mode: 0550
         owner: jenkins
         group: jenkins
       notify: restart jenkins
