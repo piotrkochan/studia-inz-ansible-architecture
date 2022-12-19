@@ -1,11 +1,22 @@
 ---
-- hosts: localhost
+- name: Install and configure local Jenkins
+
+  hosts: localhost
   connection: local
   vars:
     ansible_python_interpreter: /usr/bin/python3
     plugin_install_manager_tool_version: '2.12.9'
+
   gather_facts: true
   become: yes
+  
+  handlers:
+    - name: restart jenkins
+      service:
+        name: jenkins
+        daemon_reload: yes
+        state: restarted
+
   tasks:
     - name: Download Jenkins repository configuration
       get_url:
@@ -21,6 +32,7 @@
       yum:
         name: jenkins
         state: present
+      notify: restart jenkins
 
     - name: Ensure jenkins_init_folder exists.
       file:
@@ -33,14 +45,9 @@
         dest: /etc/systemd/system/jenkins.service.d/override.conf
         content: 'Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
         mode: 0644
+      notify: restart jenkins
 
-    - name: Restart Jenkins
-      service:
-        name: jenkins
-        daemon_reload: yes
-        state: restarted
-
-    - name: Download Plugin installation manager tool
+    - name: Download Plugin Installation Manager Tool
       get_url:
         url: "https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/{{ plugin_install_manager_tool_version }}/jenkins-plugin-manager-{{  plugin_install_manager_tool_version }}.jar"
         dest: /usr/share/jenkins/plugin-installer.jar
@@ -51,12 +58,15 @@
         src: plugins.txt.j2
         dest: /var/lib/jenkins/plugins.txt
         mode: 0644
+      notify: restart jenkins
 
     - name: Install plugins
       shell: /usr/bin/java -jar /usr/share/jenkins/plugin-installer.jar --war /usr/share/java/jenkins.war --plugin-download-directory /var/lib/jenkins/plugins --plugin-file /var/lib/jenkins/plugins.txt
+      changed_when: false
 
-    - name: Create jenkins as code configuration
+    - name: Create Jenkins as code configuration
       template:
         src: jenkins.yaml.j2
         dest: /var/lib/jenkins/jenkins.yaml
         mode: 0644
+      notify: restart jenkins

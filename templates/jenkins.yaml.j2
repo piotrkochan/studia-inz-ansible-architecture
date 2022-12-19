@@ -1,0 +1,10 @@
+jenkins:
+  systemMessage: "Welcome to the Jenkins instance"
+  numExecutors: {{ numExecutors | default(2) }}
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "{{ jenkins_admin_username }}"
+          password: "{{ jenkins_admin_password }}"
+  authorizationStrategy: loggedInUsersCanDoAnything
