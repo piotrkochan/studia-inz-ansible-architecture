@@ -62,11 +62,15 @@
         src: plugins.txt.j2
         dest: /var/lib/jenkins/plugins.txt
         mode: 0644
+        owner: jenkins
+        group: jenkins
       notify: restart jenkins
 
     - name: Install plugins
       shell: /usr/bin/java -jar /usr/share/jenkins/plugin-installer.jar --war /usr/share/java/jenkins.war --plugin-download-directory /var/lib/jenkins/plugins --plugin-file /var/lib/jenkins/plugins.txt
       changed_when: false
+      become_user: jenkins
+      become_method: sudo
 
     - name: Create Jenkins as code configuration
       template:
