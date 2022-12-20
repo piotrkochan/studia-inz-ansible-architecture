@@ -21,7 +21,7 @@ jobs:
           cron('H/1 * * * *')
         }
         factory {
-          workflowMultiBranchProjectFactory {
+          workflowBranchProjectFactory {
             scriptPath 'Jenkinsfile'
           }
         }
@@ -36,6 +36,11 @@ jobs:
             id('ansible-playbooks-repo')
             remote('{{ ansible_repository_url }}')
             credentialsId('git_repository_ssh_key')
+          }
+        }
+        configure { node ->
+          node / sources / data / 'jenkins.branch.BranchSource' / source / traits {
+            'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
           }
         }
       }
