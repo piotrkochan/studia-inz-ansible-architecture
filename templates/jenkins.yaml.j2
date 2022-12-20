@@ -13,6 +13,15 @@ jenkins:
   authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
+security:
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+  scriptApproval:
+    approvedSignatures:
+    - "method hudson.model.Run getCauses"
+    - "method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild"
 jobs:
   - script: >
       multibranchPipelineJob('ansible-playbooks') {
