@@ -1,4 +1,7 @@
 jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
   systemMessage: "<h2>Jenkins Piotr Kochan</h2><p>To jest <strong>automatycznie</strong> wygenerowana instancja Jenkinsa.</p>"
   numExecutors: {{ numExecutors | default(2) }}
   securityRealm:
@@ -7,7 +10,9 @@ jenkins:
       users:
         - id: "{{ jenkins_admin_username }}"
           password: "{{ jenkins_admin_password }}"
-  authorizationStrategy: loggedInUsersCanDoAnything
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
 jobs:
   - script: >
       multibranchPipelineJob('configuration-as-code') {
@@ -19,6 +24,21 @@ jobs:
           }
         }
       }
+  - script:
+      organizationFolder('sdf2') {
+        navigators {
+            awsCodeCommitScmNavigator {
+              awsCodeCommitURL = 'https://codecommit.eu-central-1.amazonaws.com'
+              pattern = 'application-(.*)'
+              awsCredentialsId = ''
+              codeCommitCredentialsId = 'git_repository_ssh_key'
+              traits {
+                branchDiscovery()
+              }
+            }
+          }
+      }
+
 {# jobs:
   - script: >
     multibranchPipelineJob('example-2') {
