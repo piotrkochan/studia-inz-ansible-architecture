@@ -4,6 +4,11 @@ jenkins:
   - "Ping"
   systemMessage: "<h2>Jenkins Piotr Kochan</h2><p>To jest <strong>automatycznie</strong> wygenerowana instancja Jenkinsa.</p>"
   numExecutors: {{ numExecutors | default(2) }}
+  security:
+    gitHostKeyVerificationConfiguration:
+      sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
+    globalJobDslSecurityConfiguration:
+      useScriptSecurity: false
   securityRealm:
     local:
       allowsSignup: false
@@ -25,23 +30,21 @@ jobs:
         }
       }
   - script: >
-      organizationFolder('My-project') {
-        displayName('AWS CodeCommit Projects')
+      organizationFolder('applications') {
+        displayName('Projekty aplikacji')
         configure { node ->
-
-            def traits = node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' / traits
-            traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {
-                plugin 'git@4.14.3'
+          node / navigators << 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' (plugin: 'aws-codecommit-jobs@0.3.0') {
+            awsCodeCommitURL 'https://codecommit.eu-central-1.amazonaws.com'
+            pattern 'application-(.*)'
+            awsCredentialsId ''
+            codeCommitCredentialsId 'git_repository_ssh_key'
+          }
+          def codeCommitNav = node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator'
+          def x = codeCommitNav << traits (class: 'java.util.Collections$UnmodifiableRandomAccessList', 'resolves-to': 'java.util.Collections$UnmodifiableList') {
+            c (class: 'list') {
+              'jenkins.plugins.git.traits.BranchDiscoveryTrait' (plugin: "git@4.14.3") {}
             }
-            
-            node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' {
-                plugin 'aws-codecommit-jobs@0.3.0'
-                awsCodeCommitURL 'https://codecommit.eu-central-1.amazonaws.com'
-                pattern 'application-(.*)'
-                awsCredentialsId ''
-                codeCommitCredentialsId 'git_repository_ssh_key'
-            }
-
+          }
         }
       }
 
