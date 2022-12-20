@@ -30,7 +30,7 @@ jobs:
         configure { node ->
             def traits = node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' / traits
             traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {
-                // No need to specify any parameters for this trait
+                strategyId '1'
             }
             node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' {
                 plugin 'aws-codecommit-jobs@0.3.0'
