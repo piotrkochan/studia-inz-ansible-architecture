@@ -30,7 +30,6 @@ jobs:
         }
         branchSources {
           git {
-            id = 'configuration-as-code'
             remote('{{ ansible_repository_url }}')
             credentialsId('git_repository_ssh_key')
           }
