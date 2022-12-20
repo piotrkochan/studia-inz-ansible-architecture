@@ -17,6 +17,9 @@ jobs:
   - script: >
       multibranchPipelineJob('ansible-playbooks') {
         displayName('Ansible - infrastruktura')
+        triggers {
+          cron('H/1 * * * *')
+        }
         projectFactories {
           workflowMultiBranchProjectFactory {
               scriptPath 'Jenkinsfile'
