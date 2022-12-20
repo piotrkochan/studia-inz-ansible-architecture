@@ -20,9 +20,9 @@ jobs:
         triggers {
           cron('H/1 * * * *')
         }
-        projectFactories {
+        factory {
           workflowMultiBranchProjectFactory {
-              scriptPath 'Jenkinsfile'
+            scriptPath 'Jenkinsfile'
           }
         }
         orphanedItemStrategy {
@@ -33,6 +33,7 @@ jobs:
         }
         branchSources {
           git {
+            id('ansible-playbooks-repo')
             remote('{{ ansible_repository_url }}')
             credentialsId('git_repository_ssh_key')
           }
