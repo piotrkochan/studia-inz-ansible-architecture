@@ -3,7 +3,7 @@ pipeline {
     parameters {
         choice(
             name: 'INVENTORY',
-            choices: ['aws_ec2'],
+            choices: ['aws_ec2.yml'],
             description: 'Select the Ansible inventory'
         )
         string(
@@ -32,7 +32,7 @@ pipeline {
                         currentBuild.setParameter(name: 'MODE', value: 'norun')
                         jobDescription += "\nJust reload"
                     }
-                    
+
                     if (params.HOST_LIMIT) {
                         jobDescription += "\nHost limit: ${params.HOST_LIMIT}"
                     }
