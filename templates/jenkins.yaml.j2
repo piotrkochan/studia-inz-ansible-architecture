@@ -27,11 +27,8 @@ jobs:
   - script: >
       organizationFolder('applications') {
         displayName('Projekty aplikacji')
-         triggers {
-          periodicFolderTrigger {
-            spec('* * * * *')
-            interval(300000)
-          }
+        triggers {
+          cron('H/5 * * * *')
         }
         projectFactories {
           workflowMultiBranchProjectFactory {
