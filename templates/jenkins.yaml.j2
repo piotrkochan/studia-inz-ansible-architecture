@@ -33,6 +33,7 @@ jobs:
             traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {
                 plugin 'git@4.14.3'
             }
+            
             node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' {
                 plugin 'aws-codecommit-jobs@0.3.0'
                 awsCodeCommitURL 'https://codecommit.eu-central-1.amazonaws.com'
