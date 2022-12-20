@@ -15,7 +15,8 @@ jenkins:
       allowAnonymousRead: false
 jobs:
   - script: >
-      multibranchPipelineJob('configuration-as-code') {
+      multibranchPipelineJob('ansible-playbooks') {
+        displayName('Ansible - infrastruktura')
         branchSources {
           git {
             id = 'configuration-as-code'
