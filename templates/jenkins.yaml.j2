@@ -28,9 +28,10 @@ jobs:
       organizationFolder('My-project') {
         displayName('AWS CodeCommit Projects')
         configure { node ->
+
             def traits = node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' / traits
             traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {
-                strategyId '1'
+                plugin 'git@4.14.3'
             }
             node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' {
                 plugin 'aws-codecommit-jobs@0.3.0'
@@ -39,6 +40,7 @@ jobs:
                 awsCredentialsId ''
                 codeCommitCredentialsId 'git_repository_ssh_key'
             }
+
         }
       }
 
