@@ -24,19 +24,19 @@ jobs:
           }
         }
       }
-  - script:
+  - script: >
       organizationFolder('sdf2') {
         navigators {
-            awsCodeCommitScmNavigator {
-              awsCodeCommitURL = 'https://codecommit.eu-central-1.amazonaws.com'
-              pattern = 'application-(.*)'
-              awsCredentialsId = ''
-              codeCommitCredentialsId = 'git_repository_ssh_key'
-              traits {
-                branchDiscovery()
-              }
+          awsCodeCommitScmNavigator {
+            awsCodeCommitURL = 'https://codecommit.eu-central-1.amazonaws.com'
+            pattern = 'application-(.*)'
+            awsCredentialsId = ''
+            codeCommitCredentialsId = 'git_repository_ssh_key'
+            traits {
+              branchDiscovery()
             }
           }
+        }
       }
 
 {# jobs:
