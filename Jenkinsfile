@@ -1,20 +1,84 @@
 pipeline {
     agent any
-
+    parameters {
+        choice(
+            name: 'INVENTORY',
+            choices: ['aws_ec2'],
+            description: 'Select the Ansible inventory'
+        )
+        string(
+            name: 'HOST_LIMIT',
+            defaultValue: '',
+            description: 'Specify the host limit'
+        )
+        string(
+            name: 'TAGS',
+            defaultValue: '',
+            description: 'Specify the tags'
+        )
+        choice(
+            name: 'MODE',
+            choices: ['check', 'run'],
+            description: 'Choose the mode'
+        )
+    }
     stages {
-        stage('Build') {
+        stage('Update Job Description') {
             steps {
-                echo 'Building..'
+                script {
+                    def jobDescription = "Ansible Playbook"
+
+                    if (!currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause')) {
+                        currentBuild.setParameter(name: 'MODE', value: 'norun')
+                        jobDescription += "\nJust reload"
+                    }
+                    
+                    if (params.HOST_LIMIT) {
+                        jobDescription += "\nHost limit: ${params.HOST_LIMIT}"
+                    }
+
+                    if (params.TAGS) {
+                        jobDescription += "\nTags: ${params.TAGS}"
+                    }
+
+                    if (params.MODE) {
+                        jobDescription += "\nMode: ${params.MODE}"
+                    }
+
+                    currentBuild.displayName = jobDescription
+                }
             }
         }
-        stage('Test') {
+        stage('Run Check') {
+            when {
+                expression { params.MODE == 'check' }
+            }
             steps {
-                echo 'Testing..'
+                ansiblePlaybook(
+                    playbook: 'playbook-remote.yml',
+                    inventory: "${params.INVENTORY}",
+                    extras: "--diff",
+                    extraVars: [
+                        host_limit: "${params.HOST_LIMIT}",
+                        tags: "${params.TAGS}"
+                    ]
+                )
             }
         }
-        stage('Deploy') {
+        stage('Ansible Playbook') {
+            when {
+                expression { params.MODE == 'run' }
+            }
             steps {
-                echo 'Deploying....'
+                ansiblePlaybook(
+                    playbook: 'playbook-remote.yml',
+                    inventory: "${params.INVENTORY}",
+                    extras: "--diff",
+                    extraVars: [
+                        host_limit: "${params.HOST_LIMIT}",
+                        tags: "${params.TAGS}"
+                    ]
+                )
             }
         }
     }
