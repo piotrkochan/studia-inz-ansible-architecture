@@ -25,17 +25,20 @@ jobs:
         }
       }
   - script: >
-      organizationFolder('sdf2') {
-        navigators {
-          awsCodeCommitScmNavigator {
-            awsCodeCommitURL = 'https://codecommit.eu-central-1.amazonaws.com'
-            pattern = 'application-(.*)'
-            awsCredentialsId = ''
-            codeCommitCredentialsId = 'git_repository_ssh_key'
-            traits {
-              branchDiscovery()
+      organizationFolder('My-project') {
+        displayName('AWS CodeCommit Projects')
+        configure { node ->
+            def traits = node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' / traits
+            traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {
+                // No need to specify any parameters for this trait
             }
-          }
+            node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' {
+                plugin 'aws-codecommit-jobs@0.3.0'
+                awsCodeCommitURL 'https://codecommit.eu-central-1.amazonaws.com'
+                pattern 'application-(.*)'
+                awsCredentialsId ''
+                codeCommitCredentialsId 'git_repository_ssh_key'
+            }
         }
       }
 
