@@ -17,10 +17,20 @@ jobs:
   - script: >
       multibranchPipelineJob('ansible-playbooks') {
         displayName('Ansible - infrastruktura')
+        projectFactories {
+          workflowMultiBranchProjectFactory {
+              scriptPath 'Jenkinsfile'
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            daysToKeep(-1)
+            numToKeep(-1)
+          }
+        }
         branchSources {
           git {
-            id = 'configuration-as-code'
-            remote('https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/ansible-repository')
+            remote('{{ ansible_repository_url }}')
             credentialsId('git_repository_ssh_key')
           }
         }
@@ -36,7 +46,6 @@ jobs:
               scriptPath 'Jenkinsfile'
           }
         }
-        // "Orphaned Item Strategy"
         orphanedItemStrategy {
           discardOldItems {
             daysToKeep(-1)
@@ -45,7 +54,7 @@ jobs:
         }
         configure { node ->
           node / navigators << 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' (plugin: 'aws-codecommit-jobs@0.3.0') {
-            awsCodeCommitURL '{{ ansible_repository_url }}'
+            awsCodeCommitURL '{{ repository_url }}'
             pattern 'application-(.*)'
             awsCredentialsId ''
             codeCommitCredentialsId 'git_repository_ssh_key'
