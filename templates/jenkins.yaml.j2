@@ -4,11 +4,11 @@ jenkins:
   - "Ping"
   systemMessage: "<h2>Jenkins Piotr Kochan</h2><p>To jest <strong>automatycznie</strong> wygenerowana instancja Jenkinsa.</p>"
   numExecutors: {{ numExecutors | default(2) }}
-  security:
+  {# security:
     gitHostKeyVerificationConfiguration:
       sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
     globalJobDslSecurityConfiguration:
-      useScriptSecurity: false
+      useScriptSecurity: false #}
   securityRealm:
     local:
       allowsSignup: false
