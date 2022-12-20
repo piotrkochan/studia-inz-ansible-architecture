@@ -1,47 +1,41 @@
 ---
-- name: Install and configure local Jenkins
 
+- name: Install and configure local Jenkins
   hosts: localhost
   connection: local
   gather_facts: true
   become: yes
-
   vars:
     ansible_python_interpreter: /usr/bin/python3
     plugin_install_manager_tool_version: '2.12.9'
   vars_files:
-    - vars/jenkins_sectets.yml
-  
+    - vars/jenkins.yml
+    - vars/jenkins_secrets.yml
   handlers:
     - name: restart jenkins
       service:
         name: jenkins
         daemon_reload: yes
         state: restarted
-
   tasks:
     - name: Download Jenkins repository configuration
       get_url:
        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
        dest: /etc/yum.repos.d/jenkins.repo
-
     - name: Import Jenkins repository key
       rpm_key:
         key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
         state: present
-
     - name: Install Jenkins
       yum:
         name: jenkins
         state: present
       notify: restart jenkins
-
     - name: Ensure jenkins_init_folder exists.
       file:
         path: "/etc/systemd/system/jenkins.service.d"
         state: directory
         mode: 0644
-
     - name: Configure jenkins
       copy:
         dest: /etc/systemd/system/jenkins.service.d/override.conf
@@ -50,13 +44,11 @@
           Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false -Dpermissive-script-security.enabled=true"
         mode: 0644
       notify: restart jenkins
-
     - name: Download Plugin Installation Manager Tool
       get_url:
         url: "https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/{{ plugin_install_manager_tool_version }}/jenkins-plugin-manager-{{  plugin_install_manager_tool_version }}.jar"
         dest: /usr/share/jenkins/plugin-installer.jar
         mode: 0755
-
     - name: Create plugins template
       template:
         src: plugins.txt.j2
@@ -65,15 +57,12 @@
         owner: jenkins
         group: jenkins
       notify: restart jenkins
-
     - name: Install plugins
       shell: /usr/bin/java -jar /usr/share/jenkins/plugin-installer.jar --war /usr/share/java/jenkins.war --plugin-download-directory /var/lib/jenkins/plugins --plugin-file /var/lib/jenkins/plugins.txt
       changed_when: false
-
     - name: Fix plugins permissions
       shell: chown -R jenkins:jenkins /var/lib/jenkins/plugins
       changed_when: false
-
     - name: Create Jenkins as code configuration
       template:
         src: jenkins.yaml.j2
@@ -82,7 +71,6 @@
         owner: jenkins
         group: jenkins
       notify: restart jenkins
-
     - name: Create init.groovy.d directory
       file:
         path: /var/lib/jenkins/init.groovy.d
@@ -91,7 +79,6 @@
         group: jenkins
         mode: 0550
       notify: restart jenkins
-
     - name: Create credential script
       template:
         src: credentials.groovy.j2

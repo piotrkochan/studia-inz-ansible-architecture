@@ -27,9 +27,27 @@ jobs:
   - script: >
       organizationFolder('applications') {
         displayName('Projekty aplikacji')
+         triggers {
+          periodicFolderTrigger {
+            spec('* * * * *')
+            interval(300000)
+          }
+        }
+        projectFactories {
+          workflowMultiBranchProjectFactory {
+              scriptPath 'Jenkinsfile'
+          }
+        }
+        // "Orphaned Item Strategy"
+        orphanedItemStrategy {
+          discardOldItems {
+            daysToKeep(-1)
+            numToKeep(-1)
+          }
+        }
         configure { node ->
           node / navigators << 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' (plugin: 'aws-codecommit-jobs@0.3.0') {
-            awsCodeCommitURL 'https://codecommit.eu-central-1.amazonaws.com'
+            awsCodeCommitURL '{{ ansible_repository_url }}'
             pattern 'application-(.*)'
             awsCredentialsId ''
             codeCommitCredentialsId 'git_repository_ssh_key'
