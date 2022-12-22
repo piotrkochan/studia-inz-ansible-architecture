@@ -57,7 +57,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'playbook-remote.yml',
                     inventory: "${params.INVENTORY}",
-                    vaultCredentialsId: "ansiblepass",
+                    vaultCredentialsId: "vault_password",
                     extras: "--check",
                     extraVars: [
                         host_limit: "${params.HOST_LIMIT}",
@@ -74,7 +74,7 @@ pipeline {
                 ansiblePlaybook(
                     playbook: 'playbook-remote.yml',
                     inventory: "${params.INVENTORY}",
-                    vaultCredentialsId: "ansiblepass",
+                    vaultCredentialsId: "vault_password",
                     extras: "--diff",
                     extraVars: [
                         host_limit: "${params.HOST_LIMIT}",
