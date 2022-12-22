@@ -6,3 +6,8 @@
   roles:
    - { role: ntp, when: ntp__configure, tags: ['ntp'] }
 
+- hosts: jenkins
+  gather_facts: true
+  become: yes
+  roles:
+   - { role: jenkins }
