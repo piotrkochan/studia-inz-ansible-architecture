@@ -1,13 +1,23 @@
 ---
 
+# ilosc workerów w built-in node
 jenkins__numExecutors: 2
+
+# inne
 jenkins__anonymous_read: false
 jenkins__plugin_manager_tool_version: '2.12.9'
 
 jenkins__security_approved_signatures: []
-jenkins__job_scripts: []
 
+# do automatycznego konfigurowania jobów
+jenkins__job_dsl_scripts: []
+
+# dane administratora
 jenkins__admin_username: 'admin'
-jenkins__admin_password: 'admin'
+jenkins__admin_password: 'changeme11'
+
+# do przechowywania roznych sekretów w jenkisie
+# bez potrzeby manualnego ich wprowadzania
 jenkins__ssh_credentials: []
 jenkins__username_password_credentials: []
+jenkins__secret_text_credentials: []

@@ -1,6 +1,6 @@
 ---
 
-jenkins__job_scripts:
+jenkins__job_dsl_scripts:
   - > 
     multibranchPipelineJob('ansible-playbooks') {
       displayName('Ansible - infrastruktura')

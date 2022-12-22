@@ -23,8 +23,8 @@ security:
 {% for signature in jenkins__security_approved_signatures %}
     - {{ signature }}
 {% endfor %}
-{% if jenkins__job_scripts | length %}
-{% for script in jenkins__job_scripts %}
+{% if jenkins__job_dsl_scripts | length %}
+{% for script in jenkins__job_dsl_scripts %}
 jobs:
   - script: >
       {{ script | indent(width=6) }}
