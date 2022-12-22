@@ -1,6 +1,6 @@
 ---
 
-configure__ntp: true
+ntp__configure: true
 
 ntp__servers:
   - 0.pool.ntp.org
