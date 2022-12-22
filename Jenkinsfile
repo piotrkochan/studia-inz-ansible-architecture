@@ -59,11 +59,9 @@ pipeline {
                     inventory: "${params.INVENTORY}",
                     vaultCredentialsId: "vault_password",
                     extras: "--check",
-                    colorizedOutput: true,
-                    extraVars: [
-                        host_limit: "${params.HOST_LIMIT}",
-                        tags: "${params.TAGS}"
-                    ]
+                    colorized: true,
+                    limit: "${params.HOST_LIMIT}",
+                    tags: "${params.TAGS}"
                 )
             }
         }
@@ -77,11 +75,9 @@ pipeline {
                     inventory: "${params.INVENTORY}",
                     vaultCredentialsId: "vault_password",
                     extras: "--diff",
-                    colorizedOutput: true,
-                    extraVars: [
-                        host_limit: "${params.HOST_LIMIT}",
-                        tags: "${params.TAGS}"
-                    ]
+                    colorized: true,
+                    limit: "${params.HOST_LIMIT}",
+                    tags: "${params.TAGS}"
                 )
             }
         }
