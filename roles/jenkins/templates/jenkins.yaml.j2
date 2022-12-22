@@ -12,7 +12,7 @@ jenkins:
           password: "{{ jenkins__admin_password }}"
   authorizationStrategy:
     loggedInUsersCanDoAnything:
-      allowAnonymousRead: {{ jenkins__anonymous_read | to_yaml }}
+      allowAnonymousRead: {{ jenkins__anonymous_read | bool | to_yaml }}
 security:
   gitHostKeyVerificationConfiguration:
     sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
