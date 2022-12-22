@@ -10,4 +10,4 @@ jenkins__job_scripts: []
 jenkins__admin_username: 'admin'
 jenkins__admin_password: 'admin'
 jenkins__ssh_credentials: []
-jenkins_username_password_credentials: []
+jenkins__username_password_credentials: []
