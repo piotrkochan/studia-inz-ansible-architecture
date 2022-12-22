@@ -13,6 +13,7 @@ jenkins__job_dsl_scripts:
         }
       }
       orphanedItemStrategy {
+        ansicolor('xterm')
         discardOldItems {
           daysToKeep(-1)
           numToKeep(-1)
