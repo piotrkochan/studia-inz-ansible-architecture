@@ -12,7 +12,7 @@ jenkins:
           password: "{{ jenkins__admin_password }}"
   authorizationStrategy:
     loggedInUsersCanDoAnything:
-      allowAnonymousRead: {{ jenkins__anonymous_read | bool | to_yaml }}
+      allowAnonymousRead: {{ jenkins__anonymous_read | bool }}
 security:
   gitHostKeyVerificationConfiguration:
     sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
@@ -27,7 +27,7 @@ security:
 {% for script in jenkins__job_scripts %}
 jobs:
   - script: >
-      {{ script }}
+      {{ script | indent(width=6) }}
 {% endfor %}
 {% endif %}
 
