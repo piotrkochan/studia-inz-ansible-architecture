@@ -9,4 +9,4 @@
   gather_facts: true
   become: yes
   tasks:
-    - include_role: { name: jenkins } when: true
+    - include_role: { name: jenkins }
