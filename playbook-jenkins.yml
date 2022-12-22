@@ -2,7 +2,12 @@
 
 # Ten playbook jest uruchamiany przy stawianiu maszyny wirtualnej 
 # jenkinsa w AWS, dlatego ma `connection: local`
-
+#
+# Przy uruchamianiu lokalnie host nie jest w grupie "jenkins", dlatego w normalnych
+# warunkach ustawienia jakie są skonfigurowane nie będą ładowane.
+# Trick polega na tym, że w repozytorium znajduje się symlink groups_vars/localhost -> group_vars/jenkins
+# dzięki czemu wszystkie ustawienia są zgodne
+# 
 - name: Install and configure local Jenkins
   hosts: localhost
   connection: local

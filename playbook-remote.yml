@@ -3,6 +3,6 @@
 - hosts: all
   gather_facts: true
   become: yes
-  tasks:
-    - { include_role: { name: ntp }, when: '{{ ntp__configure }}' }
+  roles:
+   - { role: ntp, when: ntp__configure, tags: ['ntp'] }
 
