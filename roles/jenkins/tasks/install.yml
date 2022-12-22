@@ -1,0 +1,17 @@
+---
+
+- name: Download Jenkins repository configuration
+      get_url:
+   url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   dest: /etc/yum.repos.d/jenkins.repo
+
+- name: Import Jenkins repository key
+  rpm_key:
+    key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    state: present
+
+- name: Install Jenkins
+  yum:
+    name: jenkins
+    state: present
+  notify: restart jenkins

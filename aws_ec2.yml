@@ -4,9 +4,13 @@ regions:
 filters:
   instance-state-name: running
 compose:
+# dla SSM
   ansible_host: instance_id
-    #  ansible_host: private_ip_address
-  groups:
-    - app: instance_tags.Application
-group_by:
-  - app
+# dla SSH
+#  ansible_host: private_ip_address
+keyed_groups:
+  - key: tags.Purpose
+    separator: ''
+# hostnames:
+  # - name: 'bastion.cld.dc7.pl'
+  #   prefix: ''

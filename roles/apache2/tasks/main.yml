@@ -1,0 +1,24 @@
+---
+
+- name: Include OS-specific variables
+  include_vars: "os-{{ ansible_os_family }}.yml"
+
+- name: Include variables for Amazon Linux
+  include_vars: "os-AmazonLinux.yml"
+  when:
+    - ansible_distribution == "Amazon"
+    - ansible_distribution_major_version == "NA"
+
+- name: Install Apache packages
+  package:
+    name: "{{ __apache_packages }}"
+    state: present
+
+- name: Configure Apache
+  include_tasks: "configure.yml"
+
+- name: Ensure Apache is running and starts at boot
+  service:
+    name: "{{ __apache_service }}"
+    state: started
+    enabled: yes

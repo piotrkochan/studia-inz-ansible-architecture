@@ -1,0 +1,13 @@
+---
+
+__apache_service: httpd
+__apache_daemon: httpd
+__apache_daemon_path: /usr/sbin/
+__apache_server_root: /etc/httpd
+__apache_conf_path: /etc/httpd/conf.d
+
+__apache_packages:
+  - httpd24
+  - httpd24-devel
+  - mod24_ssl
+  - openssh

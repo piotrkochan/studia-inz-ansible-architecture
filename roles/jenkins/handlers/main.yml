@@ -1,0 +1,7 @@
+---
+
+- name: restart jenkins
+  service:
+    name: jenkins
+    daemon_reload: yes
+    state: restarted

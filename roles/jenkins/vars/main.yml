@@ -1,0 +1,4 @@
+---
+
+jenkins__plugin_manager_download_url: "https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/{{ jenkins__plugin_manager_tool_version }}/jenkins-plugin-manager-{{ jenkins__plugin_manager_tool_version }}.jar"
+jenkins__plugin_manager_jar: /usr/share/jenkins/plugin-installer.jar

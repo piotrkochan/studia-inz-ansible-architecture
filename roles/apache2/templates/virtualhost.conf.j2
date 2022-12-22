@@ -1,0 +1,41 @@
+<VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
+  ServerName {{ item.servername }}
+
+{% if item.serveralias is defined %}
+  ServerAlias {{ item.serveralias }}
+{% endif %}
+
+{% if item.serveradmin is defined %}
+  ServerAdmin {{ item.serveradmin }}
+{% endif %}
+
+{% if item.documentroot is defined %}
+  DocumentRoot "{{ item.documentroot }}"
+{% endif %}
+
+{% if item.ssl is defined %}
+  SSLEngine on
+  SSLCipherSuite AES256+EECDH:AES256+EDH
+  SSLProtocol All -SSLv2 -SSLv3
+  SSLHonorCipherOrder On
+  SSLCompression off
+
+  SSLCertificateFile {{ item.certificate_file }}
+  SSLCertificateKeyFile {{ item.certificate_key_file }}
+{% if item.certificate_chain_file is defined %}
+  SSLCertificateChainFile {{ item.certificate_chain_file }}
+{% endif %}
+{% endif %}
+
+{% if item.documentroot is defined %}
+  <Directory "{{ item.documentroot }}">
+    AllowOverride {{ item.allow_override | default(apache_allow_override) }}
+    Options {{ item.options | default(apache_options) }}
+    Require all granted
+  </Directory>
+{% endif %}
+
+{% if item.extra_parameters is defined %}
+{{ item.extra_parameters | indent(width=2, first=True) }}
+{% endif %}
+</VirtualHost>

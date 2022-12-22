@@ -1,0 +1,27 @@
+---
+
+- name: Disable Apache modules
+  file:
+    path: "{{ __apache_server_root }}/conf.modules.d/99-{{ item }}-ansible.conf"
+    state: absent
+  with_items: "{{ apache__mods_disabled }}"
+  notify: restart apache
+
+- name: Enable Apache modules
+  copy:
+    dest: "{{ __apache_server_root }}/conf.modules.d/99-{{ item }}-ansible.conf"
+    content: |
+      LoadModule {{ item }}_module modules/mod_{{ item }}.so
+    mode: 0644
+  with_items: "{{ apache__mods_enabled }}"
+  notify: restart apache
+
+- name: Configure Virtualhosts
+  template:
+    src: "virtualhost.conf.j2"
+    dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ apache__virtualhosts }}"
+  notify: restart apache

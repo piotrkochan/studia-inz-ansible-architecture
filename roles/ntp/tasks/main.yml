@@ -1,0 +1,17 @@
+---
+
+- name: Ensure Chrony is installed
+  package:
+   name: chrony
+   state: latest
+   update_cache: yes
+
+- name: Configure NTP
+  template:
+   src: chrony.conf.j2
+   dest: /etc/chrony.conf
+   owner: root
+   group: root
+   mode: 0644
+   backup: yes
+  notify: restart chrony

@@ -1,0 +1,6 @@
+---
+
+# używane lokalnie w templatce, dlatego nie mają
+# przedroska "jenkins__"
+repository_url: https://git-codecommit.eu-central-1.amazonaws.com
+ansible_repository_url: "{{ repository_url }}/v1/repos/ansible-repository"

@@ -1,0 +1,47 @@
+---
+
+- include_tasks: install.yml
+
+- name: Ensure that override directory exists.
+  file:
+    path: "/etc/systemd/system/jenkins.service.d"
+    state: directory
+    mode: 0644
+
+- name: Configure jenkins
+  copy:
+    dest: /etc/systemd/system/jenkins.service.d/override.conf
+    content: |
+      [Service]
+      Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"
+    mode: 0644
+  notify: restart jenkins
+
+- include_tasks: plugins.yml
+
+- name: Create Jenkins as code configuration
+  template:
+    src: jenkins.yaml.j2
+    dest: /var/lib/jenkins/jenkins.yaml
+    mode: 0644
+    owner: jenkins
+    group: jenkins
+  notify: restart jenkins
+
+- name: Create init.groovy.d directory
+  file:
+    path: /var/lib/jenkins/init.groovy.d
+    state: directory
+    owner: jenkins
+    group: jenkins
+    mode: 0550
+  notify: restart jenkins
+
+- name: Create credential script
+  template:
+    src: credentials.groovy.j2
+    dest: /var/lib/jenkins/init.groovy.d/configure_jenkins_credentials.groovy
+    mode: 0550
+    owner: jenkins
+    group: jenkins
+  notify: restart jenkins

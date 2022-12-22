@@ -1,0 +1,65 @@
+---
+
+jenkins__job_scripts:
+  - > 
+    multibranchPipelineJob('ansible-playbooks') {
+      displayName('Ansible - infrastruktura')
+      triggers {
+        cron('H/1 * * * *')
+      }
+      factory {
+        workflowBranchProjectFactory {
+          scriptPath 'Jenkinsfile'
+        }
+      }
+      orphanedItemStrategy {
+        discardOldItems {
+          daysToKeep(-1)
+          numToKeep(-1)
+        }
+      }
+      branchSources {
+        git {
+          id('ansible-playbooks-repo')
+          remote('{{ ansible_repository_url }}')
+          credentialsId('git_repository_ssh_key')
+        }
+      }
+      configure { node ->
+        node / sources / data / 'jenkins.branch.BranchSource' / source / traits {
+          'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
+        }
+      }
+    }
+  - >
+    organizationFolder('applications') {
+      displayName('Projekty aplikacji')
+      triggers {
+        cron('H/5 * * * *')
+      }
+      projectFactories {
+        workflowMultiBranchProjectFactory {
+            scriptPath 'Jenkinsfile'
+        }
+      }
+      orphanedItemStrategy {
+        discardOldItems {
+          daysToKeep(-1)
+          numToKeep(-1)
+        }
+      }
+      configure { node ->
+        node / navigators << 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator' (plugin: 'aws-codecommit-jobs@0.3.0') {
+          awsCodeCommitURL '{{ repository_url }}'
+          pattern 'application-(.*)'
+          awsCredentialsId ''
+          codeCommitCredentialsId 'git_repository_ssh_key'
+        }
+        def codeCommitNav = node / navigators / 'com.jenkins.plugins.awscodecommit.navigator.AWSCodeCommitSCMNavigator'
+        def x = codeCommitNav << traits (class: 'java.util.Collections$UnmodifiableRandomAccessList', 'resolves-to': 'java.util.Collections$UnmodifiableList') {
+          c (class: 'list') {
+            'jenkins.plugins.git.traits.BranchDiscoveryTrait' (plugin: "git@4.14.3") {}
+          }
+        }
+      }
+    }

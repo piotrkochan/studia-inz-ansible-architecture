@@ -1,0 +1,17 @@
+{% for host in ntp__servers %}
+server {{ host }} iburst
+{% endfor %}
+stratumweight 0
+driftfile /var/lib/chrony/drift
+rtcsync
+makestep 10 3
+bindcmdaddress 127.0.0.1
+bindcmdaddress ::1
+keyfile /etc/chrony.keys
+commandkey 1
+generatecommandkey
+{% if not ntp__clientlog %}
+noclientlog
+{% endif %}
+logchange 0.5
+logdir {{ ntp__logdir }}

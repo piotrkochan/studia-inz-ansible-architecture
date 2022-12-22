@@ -1,0 +1,13 @@
+---
+
+configure__ntp: true
+
+ntp__servers:
+  - 0.pool.ntp.org
+  - 1.pool.ntp.org
+  - 2.pool.ntp.org
+  - 3.pool.ntp.org
+
+ntp__logdir: /var/log/chrony
+ntp__clientlog: false
+

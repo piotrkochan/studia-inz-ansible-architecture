@@ -1,0 +1,15 @@
+---
+
+- name: Install dnf-plugins
+  package:
+    name: dnf-plugins-core
+    state: present
+
+- name: Enable DNF module for CentOS 8+.
+  shell: |
+    dnf config-manager --set-enabled powertools
+    dnf module enable -y php:remi-{{ php_version }}
+  register: dnf_module_enable
+  changed_when: "'Nothing to do' not in dnf_module_enable.stdout"
+
+- 
