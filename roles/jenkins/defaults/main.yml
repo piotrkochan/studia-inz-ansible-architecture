@@ -5,5 +5,8 @@ jenkins__anonymous_read: false
 jenkins__job_scripts: []
 jenkins__plugin_manager_tool_version: '2.12.9'
 
+jenkins__admin_username: 'admin'
+jenkins__admin_password: 'admin'
+
 jenkins__ssh_credentials: []
 jenkins_username_password_credentials: []
