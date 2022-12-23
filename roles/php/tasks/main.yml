@@ -6,9 +6,9 @@
 - name: Install packages and repositories
   include_role:
     - name: yum
-      vars:
-        php__yum_packages: "{{ php__yum_packages }}"
-        yum__repositories: "{{ yum__repositories }}"
+  vars:
+    php__yum_packages: "{{ php__yum_packages }}"
+    yum__repositories: "{{ yum__repositories }}"
 
 # - name: Install dnf-plugins
 #   package:
