@@ -1,13 +1,23 @@
 ---
 
-- name: Install dnf-plugins
-  package:
-    name: dnf-plugins-core
-    state: present
+- name: Load php vars
+  include_vars: "vars/php-{{ php__version }}.yml"
 
-- name: Enable DNF module for CentOS 8+.
-  shell: |
-    dnf config-manager --set-enabled powertools
-    dnf module enable -y php:remi-{{ php_version }}
-  register: dnf_module_enable
-  changed_when: "'Nothing to do' not in dnf_module_enable.stdout"
+- name: Install packages and repositories
+  include_role:
+    - name: yum
+      vars:
+        php__yum_packages: "{{ php__yum_packages }}"
+        yum__repositories: "{{ yum__repositories }}"
+
+# - name: Install dnf-plugins
+#   package:
+#     name: dnf-plugins-core
+#     state: present
+
+# - name: Enable DNF module for CentOS 8+.
+#   shell: |
+#     dnf config-manager --set-enabled powertools
+#     dnf module enable -y php:remi-{{ php_version }}
+#   register: dnf_module_enable
+#   changed_when: "'Nothing to do' not in dnf_module_enable.stdout"
