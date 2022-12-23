@@ -5,7 +5,7 @@
 
 - name: Install packages and repositories
   include_role:
-    - name: yum
+    name: yum
   vars:
     yum__packages: "{{ php__yum_packages }}"
     yum__repositories: "{{ php__yum_repositories }}"
