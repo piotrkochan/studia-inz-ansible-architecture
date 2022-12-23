@@ -1,4 +1,7 @@
 ---
 
 yum__packages: []
-yum__repositories: []
+
+# tylko do kontekstu instalowania `yum_packages`
+yum__enablerepo: ''
+yum__disablerepo: ''

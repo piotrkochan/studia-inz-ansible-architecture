@@ -1,12 +1,17 @@
 ---
 
-php__yum_packages:
+php__yum_reposources:
   - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   - https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
-php__yum_repositories:
-  - name: 'remi-php*'
-    state: disabled
-  - name: 'remi-php81'
-    state: enabled
+php__yum_packages:
+  - php8.1
+  - php8.1-cli
+  - php8.1-fpm
+  - php8.1-opcache
+  - php8.1-curl
+  - php8.1-mbstring
+
+php__yum_disablerepo: 'remi-php*'
+php__yum_enablerepo: 'remi-php81'
 

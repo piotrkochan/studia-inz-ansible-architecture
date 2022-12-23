@@ -4,24 +4,22 @@
   yum:
     name: "{{ item.name | default(item) }}"
     state: "{{ item.state | default('present') }}"
+    enablerepo: "{{ item.enablerepo | default(omit) }}"
+    disablerepo: "{{ item.disablerepo | default(omit) }}"
   with_items: "{{ yum__packages }}"
  
-- name: Install yum-utils
-  package:
-    name: yum-utils
-    state: present
-  when: yum__repositories | length
+# - name: Install yum-utils
+#   package:
+#     name: yum-utils
+#     state: present
+#   when: yum__repositories | length
 
-- name: Disable yum repositories
-  yum:
-    name: "sos"
-    disablerepo: "{{ item.name }}"
-  when: "item.state == 'disabled'"
-  with_items: "{{ yum__repositories }}"
+# - name: Disable yum repositories
+#   command: yum-config-manager --disable '{{ item.name }}'
+#   when: "item.state == 'disabled'"
+#   with_items: "{{ yum__repositories }}"
 
-- name: Enable yum repositories
-  yum:
-    name: "sos"
-    enablerepo: "{{ item.name }}"
-  when: "item.state == 'enabled'"
-  with_items: "{{ yum__repositories }}"
+# - name: Enable yum repositories
+#   command: yum-config-manager --enable '{{ item.name }}'
+#   when: "item.state == 'enabled'"
+#   with_items: "{{ yum__repositories }}"
