@@ -4,6 +4,7 @@ jenkins__job_dsl_scripts:
   - > 
     multibranchPipelineJob('ansible-playbooks') {
       displayName('Ansible - infrastruktura')
+      disableConcurrentBuilds()
       triggers {
         cron('H/1 * * * *')
       }
@@ -12,8 +13,11 @@ jenkins__job_dsl_scripts:
           scriptPath 'Jenkinsfile'
         }
       }
-      orphanedItemStrategy {
+      configure {
+        triggerBuildsOnSCMChanges(true)
         ansicolor('xterm')
+      }
+      orphanedItemStrategy {
         discardOldItems {
           daysToKeep(-1)
           numToKeep(-1)
