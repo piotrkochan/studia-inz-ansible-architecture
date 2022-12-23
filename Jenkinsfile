@@ -4,6 +4,9 @@ pipeline {
         disableConcurrentBuilds()
         ansiColor('xterm')
     }
+    environment {
+        CONTINUE_BUILD = false
+    }
     parameters {
         choice(
             name: 'INVENTORY',
@@ -30,27 +33,32 @@ pipeline {
         stage('Update Job Description') {
             steps {
                 script {
+                    def jobName = "Ansible playbook"
                     def jobDescription = ""
 
                     if (!currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause')) {
-                        currentBuild.setParameter(name: 'MODE', value: 'norun')
-                        jobDescription += "Just reload<br />"
-                    }
-                    if (params.HOST_LIMIT) {
-                        jobDescription += "<br />Host limit: ${params.HOST_LIMIT}<br />"
-                    }
-                    if (params.TAGS) {
-                        jobDescription += "<br />Tags: ${params.TAGS}<br />"
+                        jobName = "Reload"
+                        CONTINUE_BUILD = false
+                    } else {
+                        CONTINUE_BUILD = true
                     }
 
-                    currentBuild.displayName = 'Ansible'
+                    if (params.HOST_LIMIT) {
+                        jobDescription += "Host limit: ${params.HOST_LIMIT}<br />"
+                    }
+
+                    if (params.TAGS) {
+                        jobDescription += "Tags: ${params.TAGS}<br />"
+                    }
+
+                    currentBuild.displayName = displayName
                     currentBuild.description = jobDescription
                 }
             }
         }
         stage('Run Check') {
             when {
-                expression { params.MODE == 'check' }
+                expression { params.MODE == 'check' && CONTINUE_BUILD }
             }
             steps {
                 ansiblePlaybook(
@@ -66,7 +74,7 @@ pipeline {
         }
         stage('Ansible Playbook') {
             when {
-                expression { params.MODE == 'run' }
+                expression { params.MODE == 'run' && CONTINUE_BUILD }
             }
             steps {
                 ansiblePlaybook(
