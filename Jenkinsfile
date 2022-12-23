@@ -2,7 +2,7 @@ pipeline {
     agent any
     options {
         disableConcurrentBuilds()
-        ansicolor('xterm')
+        ansiColor('xterm')
     }
     parameters {
         choice(
