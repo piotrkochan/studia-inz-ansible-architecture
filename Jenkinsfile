@@ -33,11 +33,11 @@ pipeline {
         stage('Update Job Description') {
             steps {
                 script {
-                    def jobName = "Ansible playbook"
+                    def displayName = "Ansible playbook"
                     def jobDescription = ""
 
                     if (!currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause')) {
-                        jobName = "Reload"
+                        displayName = "Reload"
                         CONTINUE_BUILD = false
                     } else {
                         CONTINUE_BUILD = true
