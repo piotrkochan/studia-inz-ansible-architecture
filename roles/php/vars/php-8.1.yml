@@ -5,12 +5,15 @@ php__yum_reposources:
   - https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
 php__yum_packages:
-  - php8.1-common
-  - php8.1-cli
-  - php8.1-fpm
-  - php8.1-opcache
-  - php8.1-curl
-  - php8.1-mbstring
+  - php81
+  - php81-cli
+  - php81-fpm
+  - php81-opcache
+  - php81-gd
+  - php81-xml
+  - php81-bcmath
+  - php81-curl
+  - php81-mbstring
 
 php__yum_disablerepo: 'remi-php*'
 php__yum_enablerepo: 'remi-php81'
