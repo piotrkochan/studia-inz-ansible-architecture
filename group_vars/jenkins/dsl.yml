@@ -4,7 +4,6 @@ jenkins__job_dsl_scripts:
   - > 
     multibranchPipelineJob('ansible-playbooks') {
       displayName('Ansible - infrastruktura')
-      disableConcurrentBuilds()
       triggers {
         cron('H/1 * * * *')
       }
@@ -15,6 +14,7 @@ jenkins__job_dsl_scripts:
       }
       configure {
         triggerBuildsOnSCMChanges(true)
+        disableConcurrentBuilds()
         ansicolor('xterm')
       }
       orphanedItemStrategy {
@@ -41,6 +41,10 @@ jenkins__job_dsl_scripts:
       displayName('Projekty aplikacji')
       triggers {
         cron('H/5 * * * *')
+      }
+      configure {
+        triggerBuildsOnSCMChanges(true)
+        ansicolor('xterm')
       }
       projectFactories {
         workflowMultiBranchProjectFactory {
