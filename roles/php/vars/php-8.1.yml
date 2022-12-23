@@ -5,7 +5,7 @@ php__yum_reposources:
   - https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
 php__yum_packages:
-  - php8.1
+  - php8.1-common
   - php8.1-cli
   - php8.1-fpm
   - php8.1-opcache
