@@ -6,14 +6,22 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ yum__packages }}"
  
-- name: Install dnf-plugins
+- name: Install yum-utils
   package:
     name: yum-utils
     state: present
   when: yum__repositories | length
 
-- name: Configure yum repositories
+- name: Disable yum repositories
   yum_repository:
-    name: "{{ item.name | default(item) }}"
-    enabled: "{{ item.state | ternary(true, false, true) }}"
+    name: "sos"
+    disablerepo: "{{ item.name }}"
+  when: "item.state == 'disabled'"
+  with_items: "{{ yum__repositories }}"
+
+- name: Enable yum repositories
+  yum_repository:
+    name: "sos"
+    enablerepo: "{{ item.name }}"
+  when: "item.state == 'enabled'"
   with_items: "{{ yum__repositories }}"
