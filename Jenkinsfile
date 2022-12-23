@@ -49,7 +49,7 @@ pipeline {
                         jobDescription += "<br />Mode: ${params.MODE}"
                     }
 
-                    currentBuild.displayName = jobDescription
+                    currentBuild.description = jobDescription
                 }
             }
         }
