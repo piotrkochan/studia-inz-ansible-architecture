@@ -14,11 +14,8 @@ jenkins__job_dsl_scripts:
       }
       configure {
         triggerBuildsOnSCMChanges(true)
-        disableConcurrentBuilds()
-        ansicolor('xterm')
       }
       orphanedItemStrategy {
-        discardOldItems {
           daysToKeep(-1)
           numToKeep(-1)
         }
@@ -41,10 +38,6 @@ jenkins__job_dsl_scripts:
       displayName('Projekty aplikacji')
       triggers {
         cron('H/5 * * * *')
-      }
-      configure {
-        triggerBuildsOnSCMChanges(true)
-        ansicolor('xterm')
       }
       projectFactories {
         workflowMultiBranchProjectFactory {

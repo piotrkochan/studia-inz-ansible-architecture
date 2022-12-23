@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    options {
+        disableConcurrentBuilds()
+        ansicolor('xterm')
+    }
     parameters {
         choice(
             name: 'INVENTORY',
