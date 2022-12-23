@@ -51,6 +51,10 @@ pipeline {
                         jobDescription += "Tags: ${params.TAGS}<br />"
                     }
 
+                    if (CONTINUE_BUILD) {
+                        jobDescription += "Mode: ${params.MODE}"
+                    }
+
                     currentBuild.displayName = displayName
                     currentBuild.description = jobDescription
                 }
