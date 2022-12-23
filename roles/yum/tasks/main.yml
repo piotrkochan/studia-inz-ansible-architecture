@@ -13,14 +13,14 @@
   when: yum__repositories | length
 
 - name: Disable yum repositories
-  yum_repository:
+  yum:
     name: "sos"
     disablerepo: "{{ item.name }}"
   when: "item.state == 'disabled'"
   with_items: "{{ yum__repositories }}"
 
 - name: Enable yum repositories
-  yum_repository:
+  yum:
     name: "sos"
     enablerepo: "{{ item.name }}"
   when: "item.state == 'enabled'"
