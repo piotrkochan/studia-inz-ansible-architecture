@@ -11,5 +11,3 @@
     dnf module enable -y php:remi-{{ php_version }}
   register: dnf_module_enable
   changed_when: "'Nothing to do' not in dnf_module_enable.stdout"
-
-- 

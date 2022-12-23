@@ -34,19 +34,19 @@ pipeline {
 
                     if (!currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause')) {
                         currentBuild.setParameter(name: 'MODE', value: 'norun')
-                        jobDescription += "\nJust reload"
+                        jobDescription += "<br />Just reload"
                     }
 
                     if (params.HOST_LIMIT) {
-                        jobDescription += "\nHost limit: ${params.HOST_LIMIT}"
+                        jobDescription += "<br />Host limit: ${params.HOST_LIMIT}"
                     }
 
                     if (params.TAGS) {
-                        jobDescription += "\nTags: ${params.TAGS}"
+                        jobDescription += "<br />Tags: ${params.TAGS}"
                     }
 
                     if (params.MODE) {
-                        jobDescription += "\nMode: ${params.MODE}"
+                        jobDescription += "<br />Mode: ${params.MODE}"
                     }
 
                     currentBuild.displayName = jobDescription
