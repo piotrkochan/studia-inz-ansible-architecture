@@ -30,25 +30,20 @@ pipeline {
         stage('Update Job Description') {
             steps {
                 script {
-                    def jobDescription = "Ansible Playbook"
+                    def jobDescription = ""
 
                     if (!currentBuild.rawBuild.getCauses()[0].toString().contains('UserIdCause')) {
                         currentBuild.setParameter(name: 'MODE', value: 'norun')
-                        jobDescription += "<br />Just reload"
+                        jobDescription += "Just reload<br />"
                     }
-
                     if (params.HOST_LIMIT) {
-                        jobDescription += "<br />Host limit: ${params.HOST_LIMIT}"
+                        jobDescription += "<br />Host limit: ${params.HOST_LIMIT}<br />"
                     }
-
                     if (params.TAGS) {
-                        jobDescription += "<br />Tags: ${params.TAGS}"
+                        jobDescription += "<br />Tags: ${params.TAGS}<br />"
                     }
 
-                    if (params.MODE) {
-                        jobDescription += "<br />Mode: ${params.MODE}"
-                    }
-
+                    currentBuild.displayName = 'Ansible'
                     currentBuild.description = jobDescription
                 }
             }
