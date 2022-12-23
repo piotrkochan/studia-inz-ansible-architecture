@@ -12,10 +12,8 @@ jenkins__job_dsl_scripts:
           scriptPath 'Jenkinsfile'
         }
       }
-      configure {
-        triggerBuildsOnSCMChanges(true)
-      }
       orphanedItemStrategy {
+        discardOldItems {
           daysToKeep(-1)
           numToKeep(-1)
         }
