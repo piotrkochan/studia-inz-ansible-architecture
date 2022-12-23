@@ -7,14 +7,6 @@
    - { role: yum }
    - { role: ntp, when: ntp__configure, tags: ['ntp'] }
 
-- hosts: jenkins
-  gather_facts: true
-  become: true
-  tags:
-    - jenkins
-  roles:
-   - { role: jenkins }
-
 - hosts: symfony_app
   gather_facts: true
   become: true
@@ -24,3 +16,11 @@
   roles:
    - { role: php }
    - { role: apache2 }
+
+- hosts: jenkins
+  gather_facts: true
+  become: true
+  tags:
+    - jenkins
+  roles:
+   - { role: jenkins }
