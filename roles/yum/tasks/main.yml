@@ -8,7 +8,7 @@
  
 - name: Install dnf-plugins
   package:
-    name: dnf-plugins-core
+    name: yum-utils
     state: present
   when: yum__repositories | length
 
