@@ -81,6 +81,8 @@ pipeline {
                 expression { params.MODE == 'run' && CONTINUE_BUILD }
             }
             steps {
+                sh 'Running as `whoami`'
+                
                 ansiblePlaybook(
                     playbook: 'playbook-remote.yml',
                     inventory: "${params.INVENTORY}",
