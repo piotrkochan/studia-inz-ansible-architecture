@@ -30,7 +30,7 @@
 #     - "{{ php__fpm_pools }}"
 
 - name: Create php alternative
-  community.general.alternatives:
+  alternatives:
     name: php
     path: /usr/bin/php
     link: /usr/bin/php{{ php__version | replace('.', '') }}
