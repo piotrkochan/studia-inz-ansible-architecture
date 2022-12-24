@@ -6,10 +6,25 @@
    state: latest
    update_cache: yes
 
+- name: Remove default sources
+  file:
+    path: /etc/chrony.d/ntp-pool.sources
+    state: absent
+
 - name: Configure NTP
   template:
    src: chrony.conf.j2
    dest: /etc/chrony.conf
+   owner: root
+   group: root
+   mode: 0644
+   backup: yes
+  notify: restart chrony
+
+- name: Configure sources
+  template:
+   src: custom.sources.j2
+   dest: /etc/chrony.d/custom.sources
    owner: root
    group: root
    mode: 0644

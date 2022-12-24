@@ -1,0 +1,3 @@
+{% for host in ntp__servers %}
+pool {{ host }} iburst maxsources {{ loop.index + 1 }}
+{% endfor %}
