@@ -13,7 +13,7 @@
   include_role:
     name: yum
   vars:
-    yum__packages: "{{ php__yum_packages + php__additional_packages | map('prepend', prefix=php__package_prefix + '-') }}"
+    yum__packages: "{{ php__yum_packages + php__additional_packages | map('join', prefix=php__package_prefix + '-') }}"
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
 
