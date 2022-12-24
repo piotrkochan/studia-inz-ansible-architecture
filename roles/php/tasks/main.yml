@@ -32,8 +32,8 @@
 - name: Create php alternative
   community.general.alternatives:
     name: php
-    path: /usr/bin/php
-    link: /usr/bin/php{{ php__version | replace('.', '') }}
+    link: /usr/bin/php
+    path: /usr/bin/php{{ php__version | replace('.', '') }}
 
 # - name: Install dnf-plugins
 #   package:
