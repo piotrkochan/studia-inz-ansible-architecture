@@ -1,9 +1,16 @@
+# Include configuration found in /etc/chrony.d/*.conf
+confdir /etc/chrony.d
+
+# Use NTP sources found in /etc/chrony.d/*.sources
+sourcedir /etc/chrony.d
+
+bindcmdaddress 127.0.0.1
+bindcmdaddress ::1
+
 stratumweight 0
 driftfile /var/lib/chrony/drift
 rtcsync
 makestep 10 3
-bindcmdaddress 127.0.0.1
-bindcmdaddress ::1
 keyfile /etc/chrony.keys
 commandkey 1
 generatecommandkey
