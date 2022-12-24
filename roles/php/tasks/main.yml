@@ -9,11 +9,19 @@
   vars:
     yum__packages: "{{ php__yum_reposources }}"
 
-- name: Install packages and repositories
+- name: Install php packages
   include_role:
     name: yum
   vars:
-    yum__packages: "{{ php__yum_packages + php__additional_packages | map('join', prefix=php__package_prefix + '-') }}"
+    yum__packages: "{{ php__yum_packages }}"
+    yum__enablerepo: "{{ php__yum__enablerepo }}"
+    yum__disablerepo: "{{ php__yum_disablerepo }}"
+
+- name: Install additional php packages
+  include_role:
+    name: yum
+  vars:
+    yum__packages: "{{ [php__package_prefix + '-'] | product(php__additional_packages) | map('join') | list }}"
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
 
