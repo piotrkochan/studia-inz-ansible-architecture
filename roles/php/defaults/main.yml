@@ -1,28 +1,33 @@
 ---
 
 php__version: 8.1
-php__fpm_listen_on: "127.0.0.1:8999"
-php__fpm_listen_allowed_clients: "127.0.0.1"
-php__fpm_listen_allowed_clients: "127.0.0.1"
 
-php__fpm_pm_mode: pm
-php__fpm_pm_max_children: 20
-php__fpm_pm_start_servers: 4
-php__fpm_pm_min_spare_servers: 2
-php__fpm_pm_max_spare_servers: 1
-php__fpm_pm_max_requests: 0
+php__default_fpm_listen_on: "127.0.0.1:8999"
+php__default_fpm_allowed_clients: "127.0.0.1"
+php__default_fpm_pool_user: "www-data"
+
+php__default_fpm_pm_start_servers: 2
+php__default_fpm_pm_max_children: 10
+php__default_fpm_pm_min_spare_servers: 1
+php__default_fpm_pm_max_spare_servers: 1
+php__default_fpm_pm_max_requests: 100
+
+php__default_fpm_pm_mode: pm
 
 php__fpm_pools:
-  - name: app
+  - pool_name: inz_pool
+    listen_address: "{{ php__default_fpm_listen_on }}"
+    allowed_clients: "{{ php__default_fpm_allowed_clients }}"
+    # użytkownik na którym nasłuchuje pool
+    pool_user:  "{{ php__default_fpm_pool_user }}"
+    pool_group: "{{ php__default_fpm_pool_user }}"
+    # ustawienia puli fpm
+    pm_mode: "{{ php__default_fpm_pm_mode }}"
+    pm_start_servers: "{{ php__default_fpm_pm_start_servers }}"
+    pm_max_children: "{{ php__default_fpm_pm_max_children }}"
+    pm_min_spare_servers: "{{ php__default_fpm_pm_min_spare_servers }}"
+    pm_max_spare_servers: "{{ php__default_fpm_pm_max_spare_servers }}"
+    pm_max_requests: "{{ php__default_fpm_pm_max_requests }}"
+    # kazdy pool moze mieć inny szablon w razie potrzeby
+    # dobra praktyka, nieograniczająca użytkownika roli
     template: pm.conf.j2
-
-    listen: "{{ php__fpm_listen_on }}"
-    listen_allowed_clients: "{{ php__fpm_listen_allowed_clients }}"
-
-    pm: "{{ php__fpm_pm_mode }}"
-    pm_start_servers: "{{ php__fpm_pm_start_servers }}"
-    pm_max_children: "{{ php__fpm_pm_max_children }}"
-    pm_start_servers: "{{ php__fpm_pm_start_servers }}"
-    pm_min_spare_servers: "{{ php__fpm_pm_min_spare_servers }}"
-    pm_max_spare_servers: "{{ php__fpm_pm_max_spare_servers }}"
-    php__fpm_pm_max_requests: "{{ php__fpm_pm_max_requests }}"

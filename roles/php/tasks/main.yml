@@ -17,6 +17,13 @@
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
 
+- name: Configure PHP-FPM pools
+  template:
+    src: templates/php-fpm.conf.j2
+    dest: "/etc/php-fpm.d/{{ item.pool_name }}.conf"
+  with_items:
+    - "{{ php__fpm_pools }}"
+
 # - name: Install dnf-plugins
 #   package:
 #     name: dnf-plugins-core

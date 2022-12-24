@@ -3,7 +3,7 @@
 jenkins__job_dsl_scripts:
   - > 
     multibranchPipelineJob('ansible-playbooks') {
-      displayName('Ansible - infrastruktura')
+      displayName('Ansible')
       triggers {
         cron('H/1 * * * *')
       }
@@ -22,6 +22,33 @@ jenkins__job_dsl_scripts:
         git {
           id('ansible-playbooks-repo')
           remote('{{ ansible_repository_url }}')
+          credentialsId('git_repository_ssh_key')
+        }
+      }
+      configure { node ->
+        node / sources / data / 'jenkins.branch.BranchSource' / source / traits {
+          'jenkins.plugins.git.traits.BranchDiscoveryTrait'()
+        }
+      }
+    }
+  - > 
+    multibranchPipelineJob('ansible-app-management') {
+      displayName('Ansible - wystawianie aplikacji webowych')
+      factory {
+        workflowBranchProjectFactory {
+          scriptPath 'Jenkinsfile'
+        }
+      }
+      orphanedItemStrategy {
+        discardOldItems {
+          daysToKeep(-1)
+          numToKeep(-1)
+        }
+      }
+      branchSources {
+        git {
+          id('ansible-deploy-repo')
+          remote('{{ ansible_deploy_repository_url }}')
           credentialsId('git_repository_ssh_key')
         }
       }
