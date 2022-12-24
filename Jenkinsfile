@@ -61,6 +61,7 @@ pipeline {
             }
         }
         stage('Install requirements') {
+            when { expression { return fileExists ('requirements.yml') } }
             steps {
                 sh '/usr/local/bin/ansible-galaxy install -r requirements.yml'
             }
