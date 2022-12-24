@@ -1,33 +1,33 @@
 ---
 
-- name: Load php vars
-  include_vars: "vars/php-{{ php__version }}.yml"
+# - name: Load php vars
+#   include_vars: "vars/php-{{ php__version }}.yml"
 
-- name: Install repositories
-  include_role:
-    name: yum
-  vars:
-    yum__packages: "{{ php__yum_reposources }}"
+# - name: Install repositories
+#   include_role:
+#     name: yum
+#   vars:
+#     yum__packages: "{{ php__yum_reposources }}"
 
-- name: Install packages and repositories
-  include_role:
-    name: yum
-  vars:
-    yum__packages: "{{ php__yum_packages }}"
-    yum__enablerepo: "{{ php__yum__enablerepo }}"
-    yum__disablerepo: "{{ php__yum_disablerepo }}"
+# - name: Install packages and repositories
+#   include_role:
+#     name: yum
+#   vars:
+#     yum__packages: "{{ php__yum_packages }}"
+#     yum__enablerepo: "{{ php__yum__enablerepo }}"
+#     yum__disablerepo: "{{ php__yum_disablerepo }}"
 
-- name: Remove default PHP-FPM pool
-  file:
-    path: "{{ php__fpm_d_directory }}/www.conf"
-    state: absent
+# - name: Remove default PHP-FPM pool
+#   file:
+#     path: "{{ php__fpm_d_directory }}/www.conf"
+#     state: absent
 
-- name: Configure PHP-FPM pools
-  template:
-    src: fpm-pool.conf.j2
-    dest: "{{ php__fpm_d_directory }}/{{ item.pool_name }}.conf"
-  with_items:
-    - "{{ php__fpm_pools }}"
+# - name: Configure PHP-FPM pools
+#   template:
+#     src: fpm-pool.conf.j2
+#     dest: "{{ php__fpm_d_directory }}/{{ item.pool_name }}.conf"
+#   with_items:
+#     - "{{ php__fpm_pools }}"
 
 - name: Create php alternative
   community.general.alternatives:
@@ -35,7 +35,7 @@
     path: /usr/bin/php
     link: /usr/bin/php{{ php__version | replace('.', '') }}
     state: auto
-    
+
 # - name: Install dnf-plugins
 #   package:
 #     name: dnf-plugins-core
