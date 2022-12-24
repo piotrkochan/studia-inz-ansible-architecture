@@ -1,0 +1,4 @@
+---
+
+- name: restart percona
+  service: name=mysql enabled=yes state=restarted

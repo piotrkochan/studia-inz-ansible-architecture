@@ -2,6 +2,7 @@
 
 php__additional_packages:
   - pdo
+  - mysql
   - sodium
   - zip
   - ldap

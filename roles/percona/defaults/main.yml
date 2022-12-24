@@ -1,0 +1,13 @@
+---
+
+percona__listen_port: 3306
+percona__root_password: 'changeme'
+
+percona__databases: []
+percona__users: []
+
+percona__cluster_mode: false
+percona__cluster_name: 'Test cluster'
+percona__cluster_hosts: []
+percona__cluster_sst_username: sstuser
+percona__cluster_sst_password: changeme

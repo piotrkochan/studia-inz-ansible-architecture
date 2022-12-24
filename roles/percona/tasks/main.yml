@@ -1,0 +1,8 @@
+---
+
+- include_tasks: install.yml
+  notify: restart percona
+
+- include_tasks: resources.yml
+  notify: restart percona
+

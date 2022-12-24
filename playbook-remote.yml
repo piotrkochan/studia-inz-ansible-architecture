@@ -25,3 +25,12 @@
     - jenkins
   roles:
    - { role: jenkins }
+
+- hosts:
+    - percona_partkeepr
+  gather_facts: true
+  become: true
+  tags:
+    - percona
+  roles:
+   - { role: percona }
