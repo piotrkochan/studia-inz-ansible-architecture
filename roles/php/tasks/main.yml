@@ -34,8 +34,7 @@
     name: php
     path: /usr/bin/php
     link: /usr/bin/php{{ php__version | replace('.', '') }}
-    priority: 1
-    state: present
+    priority: auto
 
 # - name: Install dnf-plugins
 #   package:
