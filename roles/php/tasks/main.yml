@@ -21,7 +21,7 @@
   include_role:
     name: yum
   vars:
-    yum__packages: "{{ [php__package_prefix + '-'] | product(php__additional_packages) | map('join') | list }}"
+    yum__packages: "{{ [php__package_prefix] | product(php__additional_packages) | map('join') | list }}"
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
 
@@ -41,7 +41,7 @@
   alternatives:
     name: php
     link: /usr/bin/php
-    path: /usr/bin/php{{ php__package_prefix }}
+    path: "{{ php__binary }}"
     state: auto
 
 # - name: Install dnf-plugins
