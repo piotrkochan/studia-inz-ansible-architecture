@@ -1,0 +1,6 @@
+---
+
+php__additional_packages:
+  - sodium
+  - zip
+  - ldap
