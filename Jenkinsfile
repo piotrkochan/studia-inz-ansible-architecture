@@ -60,6 +60,11 @@ pipeline {
                 }
             }
         }
+        stage('Install requirements') {
+            steps {
+                sh '/usr/local/bin/ansible-galaxy install -r requirements.yml'
+            }
+        }
         stage('Run Check') {
             when {
                 expression { params.MODE == 'check' && CONTINUE_BUILD }
@@ -81,8 +86,6 @@ pipeline {
                 expression { params.MODE == 'run' && CONTINUE_BUILD }
             }
             steps {
-                sh 'Running as `whoami`'
-                
                 ansiblePlaybook(
                     playbook: 'playbook-remote.yml',
                     inventory: "${params.INVENTORY}",
