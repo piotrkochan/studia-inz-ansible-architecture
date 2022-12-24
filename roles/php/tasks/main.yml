@@ -32,9 +32,8 @@
 - name: Create php alternative
   alternatives:
     name: php
-    path: /usr/bin/php
-    link: /usr/bin/php{{ php__version | replace('.', '') }}
-    state: auto
+    link: /usr/bin/php
+    path: /usr/bin/php{{ php__version | replace('.', '') }}
 
 # - name: Install dnf-plugins
 #   package:
