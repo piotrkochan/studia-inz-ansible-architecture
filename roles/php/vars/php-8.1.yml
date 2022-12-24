@@ -4,7 +4,7 @@ php__yum_reposources:
   - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   - https://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
-php__binary: /usr/bin/php8.1
+php__binary: /usr/bin/php81
 php__package_prefix: php81-php-
 
 php__yum_packages:
