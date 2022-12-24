@@ -17,10 +17,15 @@
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
 
+- name: Remove default PHP-FPM pool
+  file:
+    path: "{{ php__fpm_d_directory }}/www.conf"
+    state: absent
+
 - name: Configure PHP-FPM pools
   template:
     src: fpm-pool.conf.j2
-    dest: "/etc/php-fpm.d/{{ item.pool_name }}.conf"
+    dest: "{{ php__fpm_d_directory }}/{{ item.pool_name }}.conf"
   with_items:
     - "{{ php__fpm_pools }}"
 
