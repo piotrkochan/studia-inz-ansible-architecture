@@ -7,12 +7,13 @@
     baseurl: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
     gpgkey: https://www.percona.com/downloads/percona-release/RPM-GPG-KEY-percona
     gpgcheck: yes
-
+  notify: restart percona
+  
 - name: Install Percona server
   yum:
     name: percona-server-server
     state: present
+  notify: restart percona
     
-- name: "Load timezone database into MySQL"
-  shell: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql"
-  
+# - name: "Load timezone database into MySQL"
+  # shell: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql"
