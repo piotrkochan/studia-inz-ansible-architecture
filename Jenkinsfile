@@ -69,7 +69,7 @@ pipeline {
                     playbook: 'playbook-remote.yml',
                     inventory: "${params.INVENTORY}",
                     vaultCredentialsId: "vault_password",
-                    extras: "--check",
+                    extras: "--check --diff",
                     colorized: true,
                     limit: "${params.HOST_LIMIT}",
                     tags: "${params.TAGS}"

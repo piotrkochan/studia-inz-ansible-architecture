@@ -32,9 +32,10 @@
 - name: Create php alternative
   community.general.alternatives:
     name: php
-    link: /usr/bin/php
-    path: /usr/bin/php{{ php__version | replace('.', '') }}
-
+    path: /usr/bin/php
+    link: /usr/bin/php{{ php__version | replace('.', '') }}
+    state: auto
+    
 # - name: Install dnf-plugins
 #   package:
 #     name: dnf-plugins-core
