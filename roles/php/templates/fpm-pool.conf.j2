@@ -4,7 +4,7 @@ group = {{ item.pool_group }}
 listen = {{ item.listen_address }}
 listen.mode = 0660
 
-php_admin_value[error_log] = /var/log/fpm-php.{{ pool_name }}.log
+php_admin_value[error_log] = /var/log/fpm-php.{{ item.pool_name }}.log
 php_admin_flag[log_errors] = on
 
 {% if item.allowed_clients != "" %}
