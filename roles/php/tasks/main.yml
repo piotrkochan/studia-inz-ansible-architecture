@@ -3,19 +3,19 @@
 - name: Load php vars
   include_vars: "vars/php-{{ php__version }}.yml"
 
-# - name: Install repositories
-#   include_role:
-#     name: yum
-#   vars:
-#     yum__packages: "{{ php__yum_reposources }}"
+- name: Install repositories
+  include_role:
+    name: yum
+  vars:
+    yum__packages: "{{ php__yum_reposources }}"
 
-# - name: Install php packages
-#   include_role:
-#     name: yum
-#   vars:
-#     yum__packages: "{{ php__yum_packages }}"
-#     yum__enablerepo: "{{ php__yum__enablerepo }}"
-#     yum__disablerepo: "{{ php__yum_disablerepo }}"
+- name: Install php packages
+  include_role:
+    name: yum
+  vars:
+    yum__packages: "{{ php__yum_packages }}"
+    yum__enablerepo: "{{ php__yum__enablerepo }}"
+    yum__disablerepo: "{{ php__yum_disablerepo }}"
 
 - name: Install additional php packages
   include_role:
