@@ -1,0 +1,11 @@
+---
+
+apache__mods_enabled:
+  - rewrite
+  - ssl
+
+apache__virtualhosts:
+  - servername: "{{ ansible_hostname }}"
+    documentroot: /var/www/partkeepr/current
+    allow_override: false
+      

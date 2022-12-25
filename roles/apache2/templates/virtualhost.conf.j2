@@ -1,4 +1,4 @@
-<VirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}>
+<VirtualHost {{ apache__listen_ip }}:{{ apache__listen_port }}>
   ServerName {{ item.servername }}
 
 {% if item.serveralias is defined %}
@@ -11,20 +11,6 @@
 
 {% if item.documentroot is defined %}
   DocumentRoot "{{ item.documentroot }}"
-{% endif %}
-
-{% if item.ssl is defined %}
-  SSLEngine on
-  SSLCipherSuite AES256+EECDH:AES256+EDH
-  SSLProtocol All -SSLv2 -SSLv3
-  SSLHonorCipherOrder On
-  SSLCompression off
-
-  SSLCertificateFile {{ item.certificate_file }}
-  SSLCertificateKeyFile {{ item.certificate_key_file }}
-{% if item.certificate_chain_file is defined %}
-  SSLCertificateChainFile {{ item.certificate_chain_file }}
-{% endif %}
 {% endif %}
 
 {% if item.documentroot is defined %}
