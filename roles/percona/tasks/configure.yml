@@ -6,15 +6,17 @@
     dest: "/usr/share/mysql"
     state: "link"
 
-- name: "Update the my.cnf"
+- name: Configure mysqld
   template:
-    src: "etc_my.cnf-centos.j2"
-    dest: "/etc/my.cnf"
-    owner: "root"
-    mode: 0644
-  register: "config_file"
-  notify:
-    - "Restart percona"
+    src: mysqld.cnf.j2
+    dest: /etc/percona-xtradb-cluster.conf.d/mysqld.cnf
+  register: mysql_service
+
+- name: Configure wsresp
+  template:
+    src: wsrep.cnf.j2
+    dest: /etc/percona-xtradb-cluster.conf.d/wsrep.cnf
+  register: mysql_service
 
 - name: "Ensure that percona is running and enabled"
   service:

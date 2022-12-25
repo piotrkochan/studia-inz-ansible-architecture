@@ -14,7 +14,7 @@ percona__mysql_databases: []
 percona__mysql_users: []
 
 percona__cluster_mode: false
-percona__cluster_name: 'Test cluster'
+percona__cluster_name: 'pxc-cluster'
 percona__cluster_nodes: []
 percona__cluster_sst_username: sstuser
 percona__cluster_sst_password: changeme

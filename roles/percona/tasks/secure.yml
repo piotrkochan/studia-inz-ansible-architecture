@@ -39,7 +39,7 @@
     password: "{{ percona__root_password }}"
     check_implicit_admin: yes
     state: present
-    login_unix_socket: "{% if ansible_os_family == 'RedHat' %}/var/lib/mysql/mysql.sock{% else %}/var/run/mysqld/mysqld.sock{% endif %}"
+    login_unix_socket: "/var/lib/mysql/mysql.sock"
 
   with_items:
     - "{{ ansible_hostname }}"
@@ -60,7 +60,7 @@
     name: ''
     host: "{{ item }}"
     state: absent
-    login_unix_socket: "{% if ansible_os_family == 'RedHat' %}/var/lib/mysql/mysql.sock{% else %}/var/run/mysqld/mysqld.sock{% endif %}"
+    login_unix_socket: "/var/lib/mysql/mysql.sock"
   with_items:
     - "{{ ansible_hostname }}"
     - "localhost"

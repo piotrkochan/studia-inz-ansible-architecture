@@ -6,40 +6,25 @@
     state: present
   when: install_rpm_repositories|bool
 
-- name: "Enable Percona repository (Percona version >= 8)"
+- name: Enable Percona repository (Percona version >= 8)
   command: "percona-release setup ps{{ percona__version_major }}{{ percona__version_minor }}"
   when: percona__version_major|int >= 8 and install_rpm_repositories|bool
   changed_when: false
 
-- name: "Install percona database server (Percona version < 8)"
+- name: "Install percona database server"
   yum:
-    name: 
-      - "Percona-Server-server-{{percona__version_major}}{{percona__version_minor}}"
-      - "Percona-Server-client-{{percona__version_major}}{{percona__version_minor}}"
-      - "Percona-Server-devel-{{percona__version_major}}{{percona__version_minor}}"
-      - "percona-toolkit"
+    name: Percona-XtraDB-Cluster-{{percona__version_major}}{{percona__version_minor}}
     state: present
-  when: percona__version_major|int < 8
-
-- name: "Install percona database server (Percona version >= 8)"
-  yum:
-    name: 
-      - "percona-server-server-{{percona__version_major}}.{{percona__version_minor}}*"
-      - "percona-server-client-{{percona__version_major}}.{{percona__version_minor}}*"
-      - "percona-server-devel-{{percona__version_major}}.{{percona__version_minor}}*"
-      - "percona-toolkit"
-    state: present
-  when: percona__version_major|int >= 8
 
 - name: "Install MySQL-python package"
   yum:
     name: "MySQL-python"
     state: present
 
-- name: "Adjust permissions of datadir"
-  file:
-    path: "{{ percona__mysql_datadir }}"
-    owner: "mysql"
-    group: "mysql"
-    mode: 0755
-    state: "directory"
+# - name: "Adjust permissions of datadir"
+#   file:
+#     path: "{{ percona__mysql_datadir }}"
+#     owner: "mysql"
+#     group: "mysql"
+#     mode: 0755
+#     state: "directory"
