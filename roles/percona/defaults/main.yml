@@ -9,7 +9,7 @@ percona__xtradb_mysql_user: mysql
 percona__nodes_group: ansible-nodes
 
 # pierwsze node traktowany jako master
-percona__xtradb_master_node: "{{ hostvars[ groups[percona__nodes_group][0] ].ansible_default_ipv4.address }}"
+percona__master_node: "{{ hostvars[ groups[percona__nodes_group][0] ].ansible_default_ipv4.address }}"
 
 percona__root_user: root
 percona__root_password: root
