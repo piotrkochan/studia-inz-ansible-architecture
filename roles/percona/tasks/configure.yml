@@ -37,7 +37,6 @@
 
   - fetch: src=/var/lib/mysql/{{ item }} dest=/tmp/mysql/
     with_items: "{{ files_to_copy.stdout_lines }}"
-    flat: yes
     run_once: true
 
   - name: Upload keys
@@ -59,7 +58,7 @@
       name: "mysql@bootstrap.service"
       state: started
     run_once: true
-    
+
   - name: Start percona again
     service:
       name: mysql
