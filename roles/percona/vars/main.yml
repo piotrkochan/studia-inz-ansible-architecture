@@ -1,0 +1,4 @@
+---
+
+percona__source_url: https://downloads.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/Percona-XtraDB-Cluster-8.0.29/binary/redhat/7/x86_64/
+percona__files: percona-xtradb-cluster-client-8.0.25-15.1.el7.x86_64.rpm

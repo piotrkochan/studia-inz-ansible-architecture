@@ -1,0 +1,19 @@
+---
+
+jenkins__security_approved_signatures:
+  - "method hudson.model.Run getCauses"
+  - "method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild"
+
+jenkins__admin_username: kochan
+jenkins__admin_password: admin
+
+jenkins__username_password_credentials:
+- id: git_repository_ssh_key
+  username: pikey-at-349622765609
+  password: BVlqvbFbQ0Z6uYUr1v+jbtemv+AOvrN4q/Uj4NE3tZc=
+  description: Login i haslo do repozytorium code commit aws
+
+jenkins__secret_text_credentials:
+- id: vault_password
+  text: ansiblepass
+
