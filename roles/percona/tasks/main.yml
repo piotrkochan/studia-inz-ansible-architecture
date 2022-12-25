@@ -30,7 +30,7 @@
   command: "percona-release setup pxc-{{ percona__version }}"
   changed_when: false
 
-- name: "Install percona database server"
+- name: Install percona database server
   yum:
     name: "{{ xtradb__packages }}"
     state: present
@@ -43,17 +43,16 @@
   when:
     - not _percona__confmark_secured.stat.exists
 
-- name: include secure tasks
+- name: Configure security
   import_tasks: secure_install.yml
   when:
     - not _percona__confmark_secured.stat.exists
 
-- name: include bootstrap tasks
+- name: Bootstrap cluster
   import_tasks: bootstrap.yml
   when:
     - not _percona__confmark_configured.stat.exists
 
-- name: include postinstall tasks
-  import_tasks: postinstall.yml
+- import_tasks: resources.yml
   when:
     - percona__bind_address == percona__master_node

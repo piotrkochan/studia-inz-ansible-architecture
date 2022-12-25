@@ -53,7 +53,7 @@
     login_password: "{{ percona__root_password }}"
     state: absent
 
-- name: Marking as secured
+- name: Mark as secured
   file:
     path: "{{ percona__confmark_secured }}"
     state: "touch"

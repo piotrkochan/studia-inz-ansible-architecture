@@ -1,62 +1,31 @@
 ---
 
+# wersja
 percona__version: "57"
 
-percona__xtradb_datadir: /var/lib/mysql
-percona__xtradb_mysql_user: mysql
+# nazwa klastra
+percona__cluster_name: pxc-cluster
 
 # grupa ansible, które zlepiane są w klaster percony
 percona__nodes_group: ansible-nodes
 
-# pierwsze node traktowany jako master
+# po jakim interfejsie następuje komunikacja w klastrze
+percona__bind_interface: eth0
+
+# pierwszy node domyślnie traktowany jako master
+# w zasadzie to nie jest master ale na nim będzie 
+# przeprowadzany process bootstrapowania klastra
 percona__master_node: "{{ hostvars[ groups[percona__nodes_group][0] ].ansible_default_ipv4.address }}"
 
+# dane użytkownika root
 percona__root_user: root
 percona__root_password: root
-
-# nazwa klastra
-percona__cluster_name: pxc-cluster
 
 # wewnętrzny user wykorzystywany do komunikacji w klastrze
 percona__sst_user: sstuser
 percona__sst_password: sstpassword
 
-percona__bind_interface: eth0
 
+# bazy i użytkownicy
 percona__users: []
 percona__databases: []
-
-percona__max_connections: "128"
-
-xtradb_binlog_format: "ROW"
-xtradb_character_set_server: "utf8"
-xtradb_collation_server: "utf8_general_ci"
-xtradb_default_storage_engine: "InnoDB"
-xtradb_innodb_autoinc_lock_mode: 2
-xtradb_innodb_buffer_pool_instances: ""
-xtradb_innodb_buffer_pool_size: ""
-xtradb_innodb_file_format: ""
-xtradb_innodb_file_format_check: ""
-xtradb_innodb_file_per_table: ""
-xtradb_innodb_flush_log_at_trx_commit: ""
-xtradb_innodb_log_buffer_size: ""
-xtradb_innodb_log_file_size: ""
-xtradb_innodb_strict_mode: "on"
-xtradb_join_buffer_size: ""
-xtradb_log_warnings: ""
-xtradb_long_query_time: ""
-xtradb_max_allowed_packet: ""
-xtradb_max_heap_table_size: ""
-xtradb_max_user_connections: ""
-xtradb_pxc_strict_mode: "ENFORCING"
-xtradb_query_cache_size: ""
-xtradb_read_buffer_size: ""
-xtradb_read_rnd_buffer_size: ""
-xtradb_skip_name_resolve: "1"
-xtradb_slow_query_log: "0"
-xtradb_socket: ""
-xtradb_sort_buffer_size: ""
-xtradb_table_definition_cache: ""
-xtradb_table_open_cache: ""
-xtradb_table_open_cache_instances: ""
-xtradb_tmp_table_size: ""

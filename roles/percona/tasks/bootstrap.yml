@@ -36,14 +36,14 @@
   when:
     - percona__bind_address == percona__master_node
 
-- name: Start the slave nodes
+- name: Start other nodes
   service:
     name: mysql
     state: started
   when:
     - percona__bind_address != percona__master_node
 
-- name: Marking as configured
+- name: Mark as configured
   file:
     path: "{{ percona__confmark_configured }}"
     state: touch
