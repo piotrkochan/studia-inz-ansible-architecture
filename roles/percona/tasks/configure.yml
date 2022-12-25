@@ -1,10 +1,10 @@
 ---
 
-- name: "Create language dir symlink"
-  file:
-    src: "/usr/share/percona-server"
-    dest: "/usr/share/mysql"
-    state: "link"
+# - name: "Create language dir symlink"
+#   file:
+#     src: "/usr/share/percona-server"
+#     dest: "/usr/share/mysql"
+#     state: "link"
 
 - name: Configure mysqld
   template:
