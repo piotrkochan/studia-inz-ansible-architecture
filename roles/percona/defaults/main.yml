@@ -1,6 +1,7 @@
 ---
 
-percona__version: 5.7
+percona__version_major: 5
+percona__version_minor: 7
 
 percona__listen_port: 3306
 percona__root_password: 'changeme'
