@@ -46,8 +46,7 @@
     copy:
       src: /tmp/mysql
       dest: /var/lib/mysql/
-      mode: 0644
-      validate_checksum: no
+      mode: 0600
     when: ansible_play_hosts_all[1:] != ansible_play_batch
 
   - name: Start percona on the remaining hosts
