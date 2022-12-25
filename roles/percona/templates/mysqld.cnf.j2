@@ -17,15 +17,7 @@ pid-file=/var/run/mysqld/mysqld.pid
 # Disabling symbolic-links is recommended to prevent assorted security risks
 symbolic-links=0
 
-
-
-
-
-
-
-
-
-
+{# 
 # Percona Server template configuration
 
 [client]
@@ -70,4 +62,4 @@ wsrep_sst_auth={{ percona__cluster_sst_username }}:{{ percona__cluster_sst_passw
 
 # Other options
 innodb_autoinc_lock_mode=2
-{% endif %}
+{% endif %} #}
