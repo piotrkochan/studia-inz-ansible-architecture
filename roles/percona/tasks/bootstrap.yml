@@ -1,7 +1,7 @@
 ---
-- name: "Stopping {{ mysql }}"
+- name: Stoppin service
   service:
-    name: mysqld"
+    name: mysqld
     state: stopped
 
 - name: Generate configuration
@@ -37,7 +37,7 @@
 
 - name: Start the slave nodes
   service:
-    name: mysqld"
+    name: mysqld
     state: started
   when:
     - percona__bind_address != percona__master_node
