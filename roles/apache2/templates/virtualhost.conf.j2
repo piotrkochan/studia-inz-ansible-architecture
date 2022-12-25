@@ -15,6 +15,7 @@
 {% if item.documentroot is defined %}
   <Directory "{{ item.documentroot }}">
     AllowOverride {{ item.allow_override | default(apache__allow_override) }}
+    Options Indexes FollowSymLinks
     Require all granted
   </Directory>
 {% endif %}

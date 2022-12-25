@@ -9,10 +9,10 @@ apache__mods_enabled:
 apache__virtualhosts:
   - servername: "partkeepr"
     serveralias: "*"
-    documentroot: /var/www/partkeepr/current
+    documentroot: /var/www/partkeepr/current/public
     extra_parameters: |
       <FilesMatch \.php$>
-        SetHandler  "proxy:unix:/run/php-fpm/inz_pool.sock|fcgi://localhost/"
+        SetHandler "proxy:unix:/run/php-fpm-pool.sock|fcgi://localhost/"
       </FilesMatch>
   
       ErrorLog logs/example.com-error.log
