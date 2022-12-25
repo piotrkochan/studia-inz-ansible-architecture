@@ -18,6 +18,17 @@
     dest: /etc/percona-xtradb-cluster.conf.d/wsrep.cnf
   register: mysql_service
 
+- block:
+  - name: Bootstrap first server
+    service:
+      name: "mysql@bootstrap.service"
+      state: started
+  - name: Restart first server
+    service:
+      name: mysql
+      state: restarted
+  run_once: true
+
 - name: "Ensure that percona is running and enabled"
   service:
     name: "mysql"
