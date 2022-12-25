@@ -23,27 +23,39 @@
     service:
       name: "mysql@bootstrap.service"
       state: started
-  - name: Restart first server
+    run_once: true
+  - name: Start percona on the remaining hosts
     service:
       name: mysql
-      state: restarted
-  run_once: true
+      state: started
+    when: ansible_play_hosts_all[1:] != ansible_play_batch
+  - name: Stop bootstrapping
+    service:
+      name: "mysql@bootstrap.service"
+      state: started
+    run_once: true
+  - name: Start percona again
+    service:
+      name: mysql
+      state: started
 
-- name: "Ensure that percona is running and enabled"
-  service:
-    name: "mysql"
-    state: "started"
-    enabled: "yes"
-  register: mysql_service
 
-# This service restart is needed when changing default percona__mysql_datadir, mysql_native_password
-# and other settings. So better restart when the my.cnf file changes
-# Restart when my.cnf has changed and it has not been restarted by the above task
-- name: "Restart mysql to apply changes done in my.cnf file"
-  service:
-    name: "mysql"
-    state: "restarted"
-  when:
-    - config_file.changed
-    - mysql_service is defined
-    - not mysql_service.changed
+# - name: "Ensure that percona is running and enabled"
+#   service:
+#     name: "mysql"
+#     state: "started"
+#     enabled: "yes"
+#   when: ansible_play_hosts_all[1:] != ansible_play_batch
+#   register: mysql_service
+
+# # This service restart is needed when changing default percona__mysql_datadir, mysql_native_password
+# # and other settings. So better restart when the my.cnf file changes
+# # Restart when my.cnf has changed and it has not been restarted by the above task
+# - name: "Restart mysql to apply changes done in my.cnf file"
+#   service:
+#     name: "mysql"
+#     state: "restarted"
+#   when:
+#     - config_file.changed
+#     - mysql_service is defined
+#     - not mysql_service.changed
