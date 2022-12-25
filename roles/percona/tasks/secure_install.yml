@@ -13,7 +13,7 @@
     - name: "Set root password (using temp password to log in)"
       shell: 'mysql -e "SET PASSWORD = ''{{ percona__root_password }}'';" --connect-expired-password -uroot -p"{{ temppass.stdout }}"'
 
-    - name: "Red Hat: Copy .my.cnf file into the root home folder after initial root password changed"
+    - name: "Copy .my.cnf file into the root home folder after initial root password changed"
       template:
         src: root-my-cnf.j2
         dest: /root/.my.cnf
