@@ -10,8 +10,8 @@ user        = mysql
 socket      = /var/lib/mysql/mysql.sock
 pid-file    = /var/run/mysqld/mysqld.pid
 port        = {{ percona__listen_port }}
-basedir     = /usr
 datadir     = {{ percona__mysql_datadir }}
+basedir     = /usr
 tmpdir      = /tmp
 
 {% if  percona__mysql_version is version('8.0', '>=') and mysql_disable_log_bin|bool %}

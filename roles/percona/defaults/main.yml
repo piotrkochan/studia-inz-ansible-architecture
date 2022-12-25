@@ -1,7 +1,7 @@
 ---
 
-percona__version_major: "5"
-percona__version_minor: "7"
+percona__version_major: "8"
+percona__version_minor: "0"
 percona__mysql_version: "{{ percona__version_major }}.{{ percona__version_minor }}"
 
 percona__root_password: "pass"
