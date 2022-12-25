@@ -1,4 +1,4 @@
-<VirtualHost {{ apache__listen_ip }}:{{ apache__listen_port }}>
+<VirtualHost {{ apache__listen_ip }}:{{ item.listen_port | default(apache__listen_port) }}>
   ServerName {{ item.servername }}
 
 {% if item.serveralias is defined %}

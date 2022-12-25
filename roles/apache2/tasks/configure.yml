@@ -19,7 +19,7 @@
 - name: Configure Virtualhosts
   template:
     src: "virtualhost.conf.j2"
-    dest: "{{ apache_conf_path }}/{{ apache_vhosts_filename }}"
+    dest: "{{ _apache_conf_path }}/{{ item.servername }}.{{ item.listen_port | default(apache__listen_port) }}.conf"
     owner: root
     group: root
     mode: 0644
