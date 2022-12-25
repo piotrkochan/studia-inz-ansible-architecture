@@ -1,9 +1,9 @@
 ---
-- name: Get temporary root password
-  shell:  
-  register: "_xtradb_root_temp_password"
-  when:
-    - not _xtradb_password_changed.stat.exists
+# - name: Get temporary root password
+#   shell:  
+#   register: "_xtradb_root_temp_password"
+#   when:
+#     - not _xtradb_password_changed.stat.exists
 #  args:
 #    creates: "{{ xtradb_password_changed }}"
 
