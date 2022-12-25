@@ -8,4 +8,4 @@ percona__sst_password: sstpass
 percona__root_password: w9etoihsdgf
 
 percona__databases:
-  - partkeepr
+  - name: partkeepr
