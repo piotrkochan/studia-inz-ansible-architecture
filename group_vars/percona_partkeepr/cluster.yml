@@ -1,11 +1,7 @@
 ---
 
-percona__nodes_group: percona_partkeepr
-percona__cluster_name: 'partkeepr-db'
+# nazwa klastra
+percona__cluster_name: partkeepr-db
 
-percona__sst_username: sstuser
-percona__sst_password: sstpass
-percona__root_password: w9etoihsdgf
-
-percona__databases:
-  - name: partkeepr
+# nazwa grupy hostow które mają być w klastrze percony
+percona__cluster_nodes_group_name: percona_partkeepr

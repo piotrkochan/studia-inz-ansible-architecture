@@ -7,7 +7,7 @@ percona__version: "57"
 percona__cluster_name: pxc-cluster
 
 # grupa ansible, które zlepiane są w klaster percony
-percona__nodes_group: ansible-nodes
+percona__cluster_nodes_group_name: ansible-nodes
 
 # po jakim interfejsie następuje komunikacja w klastrze
 percona__bind_interface: eth0
@@ -15,7 +15,7 @@ percona__bind_interface: eth0
 # pierwszy node domyślnie traktowany jako master
 # w zasadzie to nie jest master ale na nim będzie 
 # przeprowadzany process bootstrapowania klastra
-percona__master_node: "{{ hostvars[ groups[percona__nodes_group][0] ].ansible_default_ipv4.address }}"
+percona__master_node: "{{ hostvars[ groups[percona__cluster_nodes_group_name][0] ].ansible_default_ipv4.address }}"
 
 # dane użytkownika root
 percona__root_user: root

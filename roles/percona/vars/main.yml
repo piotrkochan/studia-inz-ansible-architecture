@@ -10,7 +10,7 @@ percona__confmark_secured: "{{ percona__confdir }}/_secured"
 percona__confmark_root_password: "{{ percona__confdir }}/_password_changed"
 
 # wszystkie IP nodów w klastrze
-percona__wsrep_cluster_address: "gcomm://{{ groups[percona__nodes_group] | map('extract', hostvars, ['ansible_' ~ percona__bind_interface, 'ipv4', 'address']) | join(',') }}"
+percona__wsrep_cluster_address: "gcomm://{{ groups[percona__cluster_nodes_group_name] | map('extract', hostvars, ['ansible_' ~ percona__bind_interface, 'ipv4', 'address']) | join(',') }}"
 percona__bind_address: "{{ hostvars[inventory_hostname]['ansible_' + percona__bind_interface]['ipv4']['address'] }}"
 
 # paczki jakie muszą zostać zainstalowane
