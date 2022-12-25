@@ -3,5 +3,5 @@
 
 - name: restart xtradb
   service:
-    name: mysql"
+    name: mysqld"
     state: restarted

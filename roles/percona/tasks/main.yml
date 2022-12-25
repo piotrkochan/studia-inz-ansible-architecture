@@ -56,7 +56,7 @@
 
 - name: Ensure service is started
   service:
-    name: mysql"
+    name: mysqld"
     state: started
     enabled: true
   tags: install

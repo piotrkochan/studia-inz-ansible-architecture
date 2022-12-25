@@ -52,7 +52,7 @@
 
   - name: Start percona on the remaining hosts
     service:
-      name: mysql
+      name: mysqld
       state: started
     when: ansible_play_hosts_all[1:] != ansible_play_batch
 
@@ -64,7 +64,7 @@
 
   - name: Start percona again
     service:
-      name: mysql
+      name: mysqld
       state: started
 
 
