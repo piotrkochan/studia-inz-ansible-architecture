@@ -3,7 +3,7 @@
 apache__listen_ip: "*"
 apache__listen_port: 80
 apache__listen_port_ssl: 443
-apache__allow_override: false
+apache__allow_override: "none"
 
 apache__mods_enabled:
   - rewrite
