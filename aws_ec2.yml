@@ -8,9 +8,9 @@ compose:
   ansible_host: instance_id
 # dla SSH
 #  ansible_host: private_ip_address
+hostnames:
+  - tag:AnsibleInstance
+  - dns-name
 keyed_groups:
   - key: tags.Purpose
     separator: ''
-  - key: tags.PerconaInstance
-    separator: ''
-    parent_group: percona_partkeepr
