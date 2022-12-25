@@ -35,7 +35,10 @@
     register: files_to_copy
     run_once: true
 
-  - fetch: src=/var/lib/mysql/{{ item }} dest=/tmp/mysql/
+  - fetch:
+      src: /var/lib/mysql/{{ item }}
+      dest: /tmp/mysql
+      flat: yes
     with_items: "{{ files_to_copy.stdout_lines }}"
     run_once: true
 
