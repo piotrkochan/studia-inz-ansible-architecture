@@ -13,7 +13,7 @@
   yum:
     name: Percona-XtraDB-Cluster-{{percona__version_major}}{{percona__version_minor}}
     state: present
-    when: percona__version_major | int == 5
+  when: percona__version_major | int == 5
 
 - name: "Install MySQL-python package"
   yum:
