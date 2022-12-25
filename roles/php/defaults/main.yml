@@ -10,7 +10,7 @@ php__default_fpm_pool_user: "www-data"
 php__default_fpm_pm_start_servers: 2
 php__default_fpm_pm_max_children: 10
 php__default_fpm_pm_min_spare_servers: 1
-php__default_fpm_pm_max_spare_servers: 1
+php__default_fpm_pm_max_spare_servers: 4
 php__default_fpm_pm_max_requests: 100
 
 php__default_fpm_pm_mode: dynamic

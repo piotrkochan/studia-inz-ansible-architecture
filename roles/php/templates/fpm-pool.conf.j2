@@ -2,16 +2,15 @@
 user = {{ item.pool_user }}
 group = {{ item.pool_group }}
 listen = {{ item.listen_address }}
+{% if item.allowed_clients != "" %}
+; Allow access from specific client IP addresses
+; Replace with a list of allowed client IP addresses
+; Separate multiple IP addresses with a space
+listen.allowed_clients = {{ item.allowed_clients }}
+{% endif %}
 pm = {{ item.pm_mode }}
 pm.max_children = {{ item.pm_max_children }}
 pm.start_servers = {{ item.pm_start_servers }}
 pm.min_spare_servers = {{ item.pm_min_spare_servers }}
 pm.max_spare_servers = {{ item.pm_max_spare_servers }}
 pm.max_requests = {{ item.pm_max_requests }}
-
-{% if item.allowed_clients != "" %}
-; Allow access from specific client IP addresses
-; Replace with a list of allowed client IP addresses
-; Separate multiple IP addresses with a space
-allowed_clients = {{ item.allowed_clients }}
-{% endif %}
