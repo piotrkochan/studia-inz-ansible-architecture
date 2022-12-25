@@ -12,7 +12,7 @@ __apache_packages:
   - mod_ssl
   - openssh
 
-apache_ports_configuration_items:
+__apache_ports_configuration_items:
   - regexp: "^Listen "
     line: "Listen {{ apache_listen_port }}"
   - regexp: "^#?NameVirtualHost "
