@@ -1,78 +1,30 @@
 ---
 
-- name: "Check if /root/.my.cnf file exists if installing >= 5.7 on Red Hat (to determine if new install)"
-  stat:
-    path: /root/.my.cnf
-  register: root_my_cnf_stat
-
 - block:
     - name: "Parse temporary password from mysql log, getting last one"
       shell: "cat /var/log/mysqld.log | sed -n 's/.*temporary password is generated for root@localhost: //p' | tail -n1"
       register: temppass
 
-    - name: "Set root password (using temp password to log in)"
+    - name: Set root password
       shell: 'mysql -e "SET PASSWORD = ''{{ percona__root_password }}'';" --connect-expired-password -uroot -p"{{ temppass.stdout }}"'
 
-    - name: "Copy .my.cnf file into the root home folder after initial root password changed"
+    - name: Configure root password profile
       template:
         src: root-my-cnf.j2
         dest: /root/.my.cnf
         owner: root
         group: root
         mode: 0600
+
+    - name: Marking as password is changed
+      file:
+        path: "{{ percona__confmark_root_password }}"
+        state: "touch"
+        owner: root
+        group: root
+        mode: '0400'
   when:
-    - root_my_cnf_stat.stat.exists == false
-
-# - name: "Set the root password"
-#   mysql_user:
-#     name: root
-#     host: "{{ item }}"
-#     password: "{{ percona__root_password }}"
-#     check_implicit_admin: yes
-#     state: present
-#     login_unix_socket: "/var/lib/mysql/mysql.sock"
-
-#   with_items:
-#     - "{{ ansible_hostname }}"
-#     - "127.0.0.1"
-#     - "::1"
-#     - "localhost"
-
-
-
-
-# - name: Get temporary root password
-#   shell:  
-#   register: "_xtradb_root_temp_password"
-#   when:
-#     - not _xtradb_password_changed.stat.exists
-#  args:
-#    creates: "{{ xtradb_password_changed }}"
-
-
-- name: "Red Hat: Copy .my.cnf file into the root home folder after initial root password changed"
-  template:
-    src: root-my-cnf.j2
-    dest: /root/.my.cnf
-    owner: root
-    group: root
-    mode: 0600
-
-
-# - name: Set the MySQL root password
-#   shell: "echo \"ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ _xtradb_root_temp_password.stdout }}'; FLUSH PRIVILEGES;\" | mysql -u root --password='{{ percona__root_password }}' --connect-expired-password"
-#   when:
-#     - not _xtradb_password_changed.stat.exists
-# #  args:
-# #    creates: "{{ xtradb_password_changed }}"
-
-# - name: Marking as password is changed
-#   file:
-#     path: "{{ xtradb_password_changed }}"
-#     state: "touch"
-#     owner: root
-#     group: root
-#     mode: '0400'
+    - _percona__confmark_root_password.stat.exists == false
 
 - name: Delete anonymous connections
   mysql_user:
@@ -105,7 +57,7 @@
 
 - name: Marking as secured
   file:
-    path: "{{ xtradb_secured }}"
+    path: "{{ percona__confmark_secured }}"
     state: "touch"
     owner: root
     group: root

@@ -3,5 +3,5 @@
 
 - name: restart xtradb
   service:
-    name: "{{ percona__xtradb_service }}"
+    name: "{{ mysql }}"
     state: restarted

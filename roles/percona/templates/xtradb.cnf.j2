@@ -84,7 +84,7 @@ binlog_format={{ xtradb_binlog_format }}{% endif %}
 # WSREP options #####
 
 # Path to Galera library
-wsrep_provider={{ xtradb_wsrep_provider }}
+wsrep_provider=/usr/lib64/galera3/libgalera_smm.so
 
 # Node address
 wsrep_node_address={{ percona__xtradb_bind_address }}
