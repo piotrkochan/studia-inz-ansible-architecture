@@ -1,5 +1,7 @@
 ---
 
-- include_tasks: install.yml
-- include_tasks: resources.yml
-
+- include: check-settings.yml
+- include: install.yml
+- include: configure.yml
+- include: secure.yml
+- include: resources.yml

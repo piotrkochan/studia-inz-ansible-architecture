@@ -1,8 +1,29 @@
+# Percona Server template configuration
+
 [client]
 port        = {{ percona__listen_port }}
 socket      = /var/lib/mysql/mysql.sock
 
+
 [mysqld]
+user        = mysql
+socket      = /var/lib/mysql/mysql.sock
+pid-file    = /var/run/mysqld/mysqld.pid
+port        = {{ percona__listen_port }}
+basedir     = /usr
+datadir     = {{ percona__mysql_datadir }}
+tmpdir      = /tmp
+
+{% if  percona__mysql_version is version('8.0', '>=') and mysql_disable_log_bin|bool %}
+disable_log_bin
+{% endif %}
+{% if mysql_sql_mode is defined %}
+sql_mode={{ mysql_sql_mode }}
+{% endif %}
+{% if mysql_default_authentication_plugin is defined and percona__mysql_version is version('5.7', '>=') %}
+default_authentication_plugin={{ mysql_default_authentication_plugin }}
+{% endif %}
+
 {% if percona__cluster_mode %}
 # Enable the Galera plugin
 wsrep_provider=/usr/lib64/galera/libgalera_smm.so
@@ -22,4 +43,3 @@ wsrep_sst_auth={{ percona__cluster_sst_username }}:{{ percona__cluster_sst_passw
 # Other options
 innodb_autoinc_lock_mode=2
 {% endif %}
-

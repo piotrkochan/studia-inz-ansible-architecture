@@ -1,0 +1,18 @@
+---
+
+- name: "Add Percona yum repository"
+  yum:
+    name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+    state: present
+
+- name: "Install percona database server"
+  yum:
+    name: 
+      - "Percona-Server-server-{{ percona__version_major }}{{ percona__version_minor }}"
+      - "Percona-Server-client-{{ percona__version_major }}{{ percona__version_minor }}"
+      - "Percona-Server-devel-{{ percona__version_major }}{{ percona__version_minor }}"
+      - "percona-toolkit"
+    state: present
+
+# - name: "Load timezone database into MySQL"
+  # shell: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql"

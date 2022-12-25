@@ -1,26 +1,27 @@
 ---
 
-- name: Create databases
+- name: "Load timezone database into MySQL"
+  shell: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql"
+  when:
+    - "mysql_timezone_info|bool"
+
+- name: "Make sure the MySQL databases are present"
   mysql_db:
-    name: "{{ item.name | default(item) }}"
+    name: "{{ item.name }}"
     collation: "{{ item.collation | default('utf8_general_ci') }}"
     encoding: "{{ item.encoding | default('utf8') }}"
-    state: "{{ item.state | default('present') }}"
-  with_items: "{{ percona__databases }}"
+    state: "present"
+    login_unix_socket: "{% if ansible_os_family == 'RedHat' %}/var/lib/mysql/mysql.sock{% else %}/var/run/mysqld/mysqld.sock{% endif %}"
+  with_items: "{{ percona__mysql_databases }}"
 
-- name: Create database users
+
+- name: "Make sure the MySQL users are present"
   mysql_user:
     name: "{{ item.name }}"
-    password: "{{ item.password }}"
-    priv: "{{ item.priv | default(omit) }}"
+    password: "{{ item.pass | default('pass') }}"
+    priv: "{{ item.priv | default('*.*:ALL') }}"
+    state: "present"
     host: "{{ item.host | default('localhost') }}"
-    # login_unix_socket: "{% if ansible_os_family == 'RedHat' %}/var/lib/mysql/mysql.sock{% else %}/var/run/mysqld/mysqld.sock{% endif %}"
-  with_items: "{{ percona__users }}"
-
-- name: Create SST replication user
-  mysql_user:
-    name: "{{ percona__cluster_sst_username }}"
-    password: "{{ percona__cluster_sst_password }}"
-    host: localhost
-    priv: "*.*:REPLICATION SLAVE,RELOAD"
-  when: percona__cluster_mode
+    login_unix_socket: "{% if ansible_os_family == 'RedHat' %}/var/lib/mysql/mysql.sock{% else %}/var/run/mysqld/mysqld.sock{% endif %}"
+  with_items: "{{ percona__mysql_users }}"
+  no_log: "true"
