@@ -12,4 +12,7 @@ apache__mods_enabled:
 apache__mods_disabled:
   - autoindex
 
+apache__conf_enabled: []
+apache__conf_disabled: []
+
 apache__virtualhosts: []

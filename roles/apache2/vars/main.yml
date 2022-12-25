@@ -17,3 +17,9 @@ __apache_ports_configuration_items:
     line: "Listen {{ apache_listen_port }}"
   - regexp: "^#?NameVirtualHost "
     line: "NameVirtualHost {{ apache_listen_ip }}:{{ apache_listen_port }}"
+
+__apache_conf_remove:
+  - autoindex.conf
+  - ssl.conf
+  - userdir.conf
+  - welcome.conf

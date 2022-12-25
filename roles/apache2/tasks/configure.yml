@@ -16,6 +16,13 @@
   with_items: "{{ apache__mods_enabled }}"
   notify: restart apache
 
+- name: Remove default configurations
+  file:
+    path: "{{ __apache_conf_path }}/{{ item }}"
+    state: absent
+  with_items: "{{ __apache_conf_remove }}"
+  notify: restart apache
+
 - name: Configure Virtualhosts
   template:
     src: "virtualhost.conf.j2"

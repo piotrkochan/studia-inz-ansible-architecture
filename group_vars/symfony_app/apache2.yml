@@ -3,7 +3,16 @@
 apache__mods_enabled:
   - rewrite
   - ssl
+  - proxy
+  - mod_proxy_fcgi
 
 apache__virtualhosts:
-  - servername: "{{ ansible_hostname }}"
+  - servername: "*"
     documentroot: /var/www/partkeepr/current
+    extra_parameters: >
+      <FilesMatch \.php$>
+        SetHandler  "proxy:unix:/run/php-fpm/inz_pool.sock|fcgi://localhost/"
+      </FilesMatch>
+  
+      ErrorLog logs/example.com-error.log
+      CustomLog logs/example.com-access.log combined

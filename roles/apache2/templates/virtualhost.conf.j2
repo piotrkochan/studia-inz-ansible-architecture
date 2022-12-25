@@ -1,14 +1,13 @@
 <VirtualHost {{ apache__listen_ip }}:{{ item.listen_port | default(apache__listen_port) }}>
+{% if item.servername is defined %}
   ServerName {{ item.servername }}
-
+{% endif %}
 {% if item.serveralias is defined %}
   ServerAlias {{ item.serveralias }}
 {% endif %}
-
 {% if item.serveradmin is defined %}
   ServerAdmin {{ item.serveradmin }}
 {% endif %}
-
 {% if item.documentroot is defined %}
   DocumentRoot "{{ item.documentroot }}"
 {% endif %}

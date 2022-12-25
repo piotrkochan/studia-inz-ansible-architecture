@@ -3,7 +3,7 @@
 php__version: 8.1
 php__additional_packages: []
 
-php__default_fpm_listen_on: "127.0.0.1:8999"
+php__default_fpm_listen_on: "/run/php-fpm/inz_pool.sock"
 php__default_fpm_allowed_clients: "127.0.0.1"
 php__default_fpm_pool_user: "www-data"
 
