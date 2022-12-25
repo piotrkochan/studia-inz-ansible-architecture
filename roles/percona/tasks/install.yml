@@ -4,17 +4,16 @@
   yum:
     name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
     state: present
-  when: install_rpm_repositories|bool
 
-- name: Enable Percona repository (Percona version >= 8)
-  command: "percona-release setup ps{{ percona__version_major }}{{ percona__version_minor }}"
-  when: percona__version_major|int >= 8 and install_rpm_repositories|bool
+- name: Enable Percona repository 
+  command: "percona-release setup pxc-{{ percona__version_major }}{{ percona__version_minor }}"
   changed_when: false
 
 - name: "Install percona database server"
   yum:
     name: Percona-XtraDB-Cluster-{{percona__version_major}}{{percona__version_minor}}
     state: present
+    when: percona__version_major | int == 5
 
 - name: "Install MySQL-python package"
   yum:
