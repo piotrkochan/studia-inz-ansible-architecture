@@ -13,7 +13,7 @@ php__default_fpm_pm_min_spare_servers: 1
 php__default_fpm_pm_max_spare_servers: 1
 php__default_fpm_pm_max_requests: 100
 
-php__default_fpm_pm_mode: pm
+php__default_fpm_pm_mode: dynamic
 
 php__fpm_pools:
   - pool_name: inz_pool
