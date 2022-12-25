@@ -46,7 +46,7 @@
     state: present
 
 - name: Enable Percona repository 
-  command: "percona-release setup pxc-{{ percona__xtradb_version }}"
+  command: "percona-release setup pxc-{{ percona__version }}"
   changed_when: false
 
 - name: "Install percona database server"
@@ -79,4 +79,4 @@
   import_tasks: postinstall.yml
   tags: configure
   when:
-    - percona__xtradb_bind_address == percona__xtradb_master_node
+    - percona__bind_address == percona__master_node

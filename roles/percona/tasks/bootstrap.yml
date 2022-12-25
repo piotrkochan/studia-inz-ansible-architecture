@@ -23,7 +23,7 @@
     name: "{{ mysql }}@bootstrap.service"
     state: started
   when:
-    - percona__xtradb_bind_address == percona__xtradb_master_node
+    - percona__bind_address == percona__master_node
 
 - name: Create SST user
   mysql_user:
@@ -33,14 +33,14 @@
     password: "{{ percona__sst_password }}"
     priv: "*.*:grant,reload,lock tables,process,replication client"
   when:
-    - percona__xtradb_bind_address == percona__xtradb_master_node
+    - percona__bind_address == percona__master_node
 
 - name: Start the slave nodes
   service:
     name: "{{ mysql }}"
     state: started
   when:
-    - percona__xtradb_bind_address != percona__xtradb_master_node
+    - percona__bind_address != percona__master_node
 
 - name: Marking as configured
   file:
