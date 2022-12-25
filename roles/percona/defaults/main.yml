@@ -8,6 +8,9 @@ percona__mysql_user: mysql
 # grupa ansible, które zlepiane są w klaster percony
 percona__nodes_group: ansible-nodes
 
+# interfejs po którym baza się komunikuje
+percona__bind_interface: eth0
+
 # pierwsze node traktowany jako master
 percona__master_node: "{{ hostvars[ groups[percona__nodes_group][0] ].ansible_default_ipv4.address }}"
 
