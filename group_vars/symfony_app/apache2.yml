@@ -4,7 +4,7 @@ apache__mods_enabled:
   - rewrite
   - ssl
   - proxy
-  - mod_proxy_fcgi
+  - proxy_fcgi
 
 apache__virtualhosts:
   - servername: "*"
