@@ -2,4 +2,4 @@
 
 # to powinno byc w host_vars
 percona__cluster_node_name: node1
-percona__cluster_node_host: "{{ ansible_hosts['percona_partkeepr1']['ansible_default_ipv4']['address'] }}"
+percona__cluster_node_host: "{{ hostvars['percona_partkeepr1']['ansible_default_ipv4']['address'] }}"
