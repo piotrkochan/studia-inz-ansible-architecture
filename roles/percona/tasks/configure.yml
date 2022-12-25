@@ -29,6 +29,7 @@
       path: /tmp/mysql
       state: directory
     delegate_to: 127.0.0.1
+    become: no
   - name: Download keys
     fetch:
       src: /var/lib/mysql/*.pem
