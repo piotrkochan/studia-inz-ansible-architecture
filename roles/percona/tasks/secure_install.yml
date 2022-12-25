@@ -1,6 +1,6 @@
 ---
 - name: Get temporary root password
-  shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}' | tail -n 1
+  shell:  
   register: "_xtradb_root_temp_password"
   when:
     - not _xtradb_password_changed.stat.exists
@@ -8,20 +8,29 @@
 #    creates: "{{ xtradb_password_changed }}"
 
 
-- name: Set the MySQL root password
-  shell: "echo \"ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ _xtradb_root_temp_password.stdout }}'; FLUSH PRIVILEGES;\" | mysql -u root --password='{{ percona__root_password }}' --connect-expired-password"
-  when:
-    - not _xtradb_password_changed.stat.exists
-#  args:
-#    creates: "{{ xtradb_password_changed }}"
-
-- name: Marking as password is changed
-  file:
-    path: "{{ xtradb_password_changed }}"
-    state: "touch"
+- name: "Red Hat: Copy .my.cnf file into the root home folder after initial root password changed"
+  template:
+    src: root-my-cnf.j2
+    dest: /root/.my.cnf
     owner: root
     group: root
-    mode: '0400'
+    mode: 0600
+
+
+# - name: Set the MySQL root password
+#   shell: "echo \"ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ _xtradb_root_temp_password.stdout }}'; FLUSH PRIVILEGES;\" | mysql -u root --password='{{ percona__root_password }}' --connect-expired-password"
+#   when:
+#     - not _xtradb_password_changed.stat.exists
+# #  args:
+# #    creates: "{{ xtradb_password_changed }}"
+
+# - name: Marking as password is changed
+#   file:
+#     path: "{{ xtradb_password_changed }}"
+#     state: "touch"
+#     owner: root
+#     group: root
+#     mode: '0400'
 
 - name: Delete anonymous connections
   mysql_user:
