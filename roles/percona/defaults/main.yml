@@ -21,7 +21,7 @@ percona__cluster_name: pxc-cluster
 percona__sst_user: sstuser
 percona__sst_password: sstpassword
 
-percona__xtradb_bind_interface: eth0
+percona__bind_interface: eth0
 
 percona__users: []
 percona__databases: []
