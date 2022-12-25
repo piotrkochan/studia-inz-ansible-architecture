@@ -1,4 +1,24 @@
 [mysqld]
+
+{# {% if percona__cluster_mode %}
+# Enable the Galera plugin
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+
+# Galera cluster configuration
+wsrep_cluster_address=gcomm://{{ percona__cluster_nodes | join(',')}}
+
+# Galera node configuration
+wsrep_node_address={{ percona__cluster_node_host }}
+
+# Galera synchronous replication
+wsrep_sst_method=xtrabackup-v2
+wsrep_sst_auth={{ percona__cluster_sst_username }}:{{ percona__cluster_sst_password }}
+
+# Other options
+innodb_autoinc_lock_mode=2
+{% endif %} #}
+
+
 # Path to Galera library
 wsrep_provider=/usr/lib64/galera3/libgalera_smm.so
 
@@ -22,7 +42,8 @@ wsrep_log_conflicts
 innodb_autoinc_lock_mode=2
 
 # Node IP address
-#wsrep_node_address=192.168.70.63
+wsrep_node_address={{ percona__cluster_node_host }}
+
 # Cluster name
 wsrep_cluster_name={{ percona__cluster_name }}
 
