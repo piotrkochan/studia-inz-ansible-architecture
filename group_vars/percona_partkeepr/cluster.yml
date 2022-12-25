@@ -2,6 +2,6 @@
 
 percona__cluster_mode: true
 percona__cluster_name: 'PartKeepr DB'
-percona__cluster_hosts: []
+percona__cluster_nodes: []
 percona__cluster_sst_username: sstuser
 percona__cluster_sst_password: sstpass
