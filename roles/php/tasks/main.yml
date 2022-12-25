@@ -16,7 +16,6 @@
     yum__packages: "{{ php__yum_packages }}"
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
-  notify: restart php_fpm
 
 - name: Install additional php packages
   include_role:
@@ -25,8 +24,7 @@
     yum__packages: "{{ [php__package_prefix] | product(php__additional_packages) | map('join') | list }}"
     yum__enablerepo: "{{ php__yum__enablerepo }}"
     yum__disablerepo: "{{ php__yum_disablerepo }}"
-  notify: restart php_fpm
-  
+
 - name: Remove default PHP-FPM pool
   file:
     path: "{{ php__fpm_d_directory }}/www.conf"
