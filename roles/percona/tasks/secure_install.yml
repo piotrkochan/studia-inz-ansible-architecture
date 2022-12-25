@@ -1,4 +1,46 @@
 ---
+
+- name: "Check if /root/.my.cnf file exists if installing >= 5.7 on Red Hat (to determine if new install)"
+  stat:
+    path: /root/.my.cnf
+  register: root_my_cnf_stat
+
+- block:
+    - name: "Parse temporary password from mysql log, getting last one"
+      shell: "cat /var/log/mysqld.log | sed -n 's/.*temporary password is generated for root@localhost: //p' | tail -n1"
+      register: temppass
+
+    - name: "Set root password (using temp password to log in)"
+      shell: 'mysql -e "SET PASSWORD = ''{{ percona__root_password }}'';" --connect-expired-password -uroot -p"{{ temppass.stdout }}"'
+
+    - name: "Red Hat: Copy .my.cnf file into the root home folder after initial root password changed"
+      template:
+        src: root-my-cnf.j2
+        dest: /root/.my.cnf
+        owner: root
+        group: root
+        mode: 0600
+  when:
+    - root_my_cnf_stat.stat.exists == false
+
+# - name: "Set the root password"
+#   mysql_user:
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ percona__root_password }}"
+#     check_implicit_admin: yes
+#     state: present
+#     login_unix_socket: "/var/lib/mysql/mysql.sock"
+
+#   with_items:
+#     - "{{ ansible_hostname }}"
+#     - "127.0.0.1"
+#     - "::1"
+#     - "localhost"
+
+
+
+
 # - name: Get temporary root password
 #   shell:  
 #   register: "_xtradb_root_temp_password"

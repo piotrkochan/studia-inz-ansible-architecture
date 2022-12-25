@@ -5,3 +5,4 @@ percona__cluster_name: 'partkeepr-db'
 
 percona__sst_username: sstuser
 percona__sst_password: sstpass
+percona__root_password: w9etoihsdgf
