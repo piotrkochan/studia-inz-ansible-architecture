@@ -1,13 +1,6 @@
 # roles/ansible-role-XtraDB-Cluster/tasks/main.yml
 ---
 
-- name: "Include {{ ansible_distribution }} variables"
-  include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
-  tags: install
-
 - name: Checking if XtraDB cluster is already configured
   stat:
     path: "{{ xtradb_configured }}"
@@ -26,12 +19,19 @@
   register: "_xtradb_password_changed"
   tags: install
 
-- name: "Include {{ ansible_distribution }} tasks"
-  include_tasks: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
-  tags: install
+- name: Disable SELinux
+  selinux:
+    state: disabled
+  when: ansible_selinux.status == 'enabled'
+
+- name: repository installation
+  yum_repository:
+    file: "{{ xtradb_repo_filename }}" 
+    name: "{{ xtradb_repo_name }}"
+    description: "{{ xtradb_repo_desc }}"
+    baseurl: "{{ xtradb_repo_baseurl }}"
+    gpgkey: "{{ xtradb_repo_gpgkey }}"
+    gpgcheck: "{{ xtradb_repo_gpgcheck }}"
 
 - name: Install packages
   package:
@@ -49,13 +49,11 @@
   when:
     - not _xtradb_secured.stat.exists
 
-
 - name: include secure tasks
   import_tasks: secure_install.yml
   tags: install
   when:
     - not _xtradb_secured.stat.exists
-
 
 - name: include bootstrap tasks
   import_tasks: bootstrap.yml
