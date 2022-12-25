@@ -25,7 +25,6 @@ percona__root_password: root
 percona__sst_user: sstuser
 percona__sst_password: sstpassword
 
-
 # bazy i użytkownicy
 percona__users: []
 percona__databases: []

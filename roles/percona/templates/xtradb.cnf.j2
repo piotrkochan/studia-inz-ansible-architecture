@@ -4,8 +4,8 @@ user=mysql
 datadir=/var/lib/mysql
 skip_name_resolve=1
 slow_query_log=0
-character_set_server={{ xtradb_character_set_server }}
-collation_server={{ xtradb_collation_server }}
+character_set_server=utf8
+collation_server=utf8_general_ci
 
 default_storage_engine=InnoDB
 innodb_strict_mode=on
