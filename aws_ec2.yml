@@ -11,8 +11,6 @@ compose:
 keyed_groups:
   - key: tags.Purpose
     separator: ''
-host_vars:
-  "{{ groups['percona_partkeepr'][0] }}":
-    percona__cluster_node_name: node1
-  "{{ groups['percona_partkeepr'][1] }}":
-    percona__cluster_node_name: node2
+  - key: tags.PerconaInstance
+    separator: ''
+    parent_group: percona_partkeepr

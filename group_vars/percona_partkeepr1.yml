@@ -1,0 +1,4 @@
+---
+
+# to powinno byc w host_vars
+percona__cluster_node_name: node1
