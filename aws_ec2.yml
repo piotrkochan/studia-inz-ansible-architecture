@@ -9,7 +9,7 @@ compose:
 # dla SSH
 #  ansible_host: private_ip_address
 hostnames:
-  - tag:AnsibleInstance
+  - tag:AnsibleHost
   - dns-name
 keyed_groups:
   - key: tags.Purpose
