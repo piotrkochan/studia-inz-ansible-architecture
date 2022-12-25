@@ -1,6 +1,5 @@
 ---
 
-- include: check-settings.yml
 - include: install.yml
 - include: configure.yml
 - include: secure.yml
