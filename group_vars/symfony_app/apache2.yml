@@ -10,7 +10,7 @@ apache__virtualhosts:
   - servername: "partkeepr"
     serveralias: "*"
     documentroot: /var/www/partkeepr/current
-    extra_parameters: >
+    extra_parameters: |
       <FilesMatch \.php$>
         SetHandler  "proxy:unix:/run/php-fpm/inz_pool.sock|fcgi://localhost/"
       </FilesMatch>
