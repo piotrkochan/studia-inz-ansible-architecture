@@ -1,7 +1,7 @@
 ---
 
 - block:
-    - name: "Parse temporary password from mysql log, getting last one"
+    - name: Extract initial root password
       shell: "cat /var/log/mysqld.log | sed -n 's/.*temporary password is generated for root@localhost: //p' | tail -n1"
       register: temppass
 
@@ -34,7 +34,7 @@
     host_all: yes
     state: absent
 
-- name: "Secure the MySQL root user for localhost"
+- name: Setup root hosts
   mysql_user:
     login_user: "{{ percona__root_user }}"
     login_password: "{{ percona__root_password }}"
@@ -59,4 +59,4 @@
     state: "touch"
     owner: root
     group: root
-    mode: '0400'
+    mode: 0400

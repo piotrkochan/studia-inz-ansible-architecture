@@ -5,42 +5,23 @@
   stat:
     path: "{{ percona__confmark_configured }}"
   register: "_percona__confmark_configured"
-  tags: install
 
 - name: Cheking if XtraDB cluster is already secured
   stat:
     path: "{{ percona__confmark_secured }}"
   register: "_percona__confmark_secured"
-  tags: install
 
 - name: Cheking if XtraDB cluster is already configured with the password
   stat:
     path: "{{ percona__confmark_root_password }}"
   register: "_percona__confmark_root_password"
-  tags: install
 
 - name: Disable SELinux
   selinux:
     state: disabled
   when: ansible_selinux.status == 'enabled'
 
-# - name: repository installation
-#   yum_repository:
-#     file: "{{ xtradb_repo_filename }}" 
-#     name: "{{ xtradb_repo_name }}"
-#     description: "{{ xtradb_repo_desc }}"
-#     baseurl: "{{ xtradb_repo_baseurl }}"
-#     gpgkey: "{{ xtradb_repo_gpgkey }}"
-#     gpgcheck: "{{ xtradb_repo_gpgcheck }}"
-
-# - name: Install packages
-#   package:
-#     name: "{{ item }}"
-#     state: installed
-#   with_items: "{{ xtradb__packages }}"
-#   tags: install
-
-- name: "Add Percona yum repository"
+- name: Add Percona yum repository
   yum:
     name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
     state: present
@@ -54,29 +35,25 @@
     name: "{{ xtradb__packages }}"
     state: present
 
-- name: Ensure service is started
+- name: Start service for the first time
   service:
     name: mysql
     state: started
     enabled: true
-  tags: install
   when:
     - not _percona__confmark_secured.stat.exists
 
 - name: include secure tasks
   import_tasks: secure_install.yml
-  tags: install
   when:
     - not _percona__confmark_secured.stat.exists
 
 - name: include bootstrap tasks
   import_tasks: bootstrap.yml
-  tags: configure
   when:
     - not _percona__confmark_configured.stat.exists
 
 - name: include postinstall tasks
   import_tasks: postinstall.yml
-  tags: configure
   when:
     - percona__bind_address == percona__master_node
