@@ -15,5 +15,5 @@ apache__virtualhosts:
         SetHandler "proxy:unix:/run/php-fpm-pool.sock|fcgi://localhost/"
       </FilesMatch>
   
-      ErrorLog logs/example.com-error.log
-      CustomLog logs/example.com-access.log combined
+      ErrorLog logs/partkeepr-error.log
+      CustomLog logs/partkeepr-access.log combined
