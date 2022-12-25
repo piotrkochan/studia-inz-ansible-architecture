@@ -10,6 +10,7 @@ compose:
 #  ansible_host: private_ip_address
 hostnames:
   - tag:AnsibleHost
+  - tag:Purpose
   - dns-name
 keyed_groups:
   - key: tags.Purpose
