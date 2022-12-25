@@ -15,7 +15,7 @@
     - symfony_app
     - app
   roles:
-   - { role: php }
+  #  - { role: php }
    - { role: apache2 }
 
 - hosts: jenkins
