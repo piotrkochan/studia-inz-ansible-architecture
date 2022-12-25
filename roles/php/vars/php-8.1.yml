@@ -6,6 +6,7 @@ php__yum_reposources:
 
 php__binary: /usr/bin/php81
 php__package_prefix: php81-php-
+php__fpm_service_name: php81-php-fpm
 
 php__yum_packages:
   - php81
