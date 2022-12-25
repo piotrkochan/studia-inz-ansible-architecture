@@ -30,6 +30,7 @@
       state: directory
     delegate_to: 127.0.0.1
     become: no
+    run_once: true
 
   - shell: (cd /var/lib/mysql; find . -maxdepth 1 -name "*.pem") | cut -d'/' -f2
     register: files_to_copy

@@ -1,4 +1,7 @@
+# roles/ansible-role-XtraDB-Cluster/handlers/main.yml
 ---
 
-- name: "Restart percona"
-  service: "name=mysql state=restarted"
+- name: restart xtradb
+  service:
+    name: "{{ percona__xtradb_service }}"
+    state: restarted

@@ -1,4 +1,4 @@
 ---
 
-- name: restart percona
-  service: name=mysql enabled=yes state=restarted
+- name: "Restart percona"
+  service: "name=mysql state=restarted"

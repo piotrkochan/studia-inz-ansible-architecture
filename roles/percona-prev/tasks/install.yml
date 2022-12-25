@@ -5,14 +5,25 @@
     name: https://repo.percona.com/yum/percona-release-latest.noarch.rpm
     state: present
 
+- name: Enable Percona repository 
+  command: "percona-release setup pxc-{{ percona__version_major }}{{ percona__version_minor }}"
+  changed_when: false
+
 - name: "Install percona database server"
   yum:
-    name: 
-      - "Percona-Server-server-{{ percona__version_major }}{{ percona__version_minor }}"
-      - "Percona-Server-client-{{ percona__version_major }}{{ percona__version_minor }}"
-      - "Percona-Server-devel-{{ percona__version_major }}{{ percona__version_minor }}"
-      - "percona-toolkit"
+    name: Percona-XtraDB-Cluster-{{percona__version_major}}{{percona__version_minor}}
+    state: present
+  when: percona__version_major | int == 5
+
+- name: "Install MySQL-python package"
+  yum:
+    name: "MySQL-python"
     state: present
 
-# - name: "Load timezone database into MySQL"
-  # shell: "mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql mysql"
+# - name: "Adjust permissions of datadir"
+#   file:
+#     path: "{{ percona__mysql_datadir }}"
+#     owner: "mysql"
+#     group: "mysql"
+#     mode: 0755
+#     state: "directory"
