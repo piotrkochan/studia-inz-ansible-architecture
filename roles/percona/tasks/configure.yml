@@ -24,6 +24,26 @@
       name: "mysql@bootstrap.service"
       state: started
     run_once: true
+  - name: Create tmp dir
+    file:
+      path: /tmp/mysql
+      state: directory
+    delegate_to: 127.0.0.1
+  - name: Download keys
+    fetch:
+      src: /var/lib/mysql/*.pem
+      dest: /tmp/mysql
+      flat: yes
+      force: yes
+      validate_checksum: no
+    run_once: true
+  - name: Upload keys
+    copy:
+      src: /tmp/mysql/*.pem
+      dest: /var/lib/mysql
+      mode: 0644
+      validate_checksum: no
+    when: ansible_play_hosts_all[1:] != ansible_play_batch
   - name: Start percona on the remaining hosts
     service:
       name: mysql
