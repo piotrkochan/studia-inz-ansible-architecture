@@ -7,7 +7,8 @@ apache__mods_enabled:
   - proxy_fcgi
 
 apache__virtualhosts:
-  - servername: "*"
+  - servername: "partkeepr"
+    serveralias: "*"
     documentroot: /var/www/partkeepr/current
     extra_parameters: >
       <FilesMatch \.php$>
