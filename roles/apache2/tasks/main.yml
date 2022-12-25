@@ -1,8 +1,5 @@
 ---
 
-- name: Include OS-specific variables
-  include_vars: "os-{{ ansible_os_family }}.yml"
-
 - name: Install Apache packages
   package:
     name: "{{ __apache_packages }}"
