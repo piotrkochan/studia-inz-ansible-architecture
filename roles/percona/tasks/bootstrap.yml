@@ -1,16 +1,9 @@
 ---
-- name: Stoppin service
-  service:
-    name: mysqld
-    state: stopped
 
-- name: Generate configuration
-  template:
-    src:  xtradb.cnf.j2
-    dest: "{{ percona__config_file }}"
-    owner: root
-    group: root
-    mode: 0644
+- name: Stopping service
+  service:
+    name: mysql
+    state: stopped
 
 - name: Configure swappiness
   sysctl:
@@ -18,9 +11,17 @@
     value: 0
     state: present
 
+- name: Configure percona
+  template:
+    src:  xtradb.cnf.j2
+    dest: "{{ percona__confdir }}/wsrep.cnf"
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Start the master node
   service:
-    name: mysqld@bootstrap.service
+    name: mysql@bootstrap.service
     state: started
   when:
     - percona__bind_address == percona__master_node
@@ -37,7 +38,7 @@
 
 - name: Start the slave nodes
   service:
-    name: mysqld
+    name: mysql
     state: started
   when:
     - percona__bind_address != percona__master_node

@@ -2,7 +2,6 @@
 
 # ścieżki do katalogów
 percona__confdir: /etc/percona-xtradb-cluster.conf.d
-percona__config_file: "{{ percona__confdir }}/wsrep.cnf"
 
 # w tych plikach ansible zapisuje stan
 # aby wiedzieć czy dana operacja została już wykonana
