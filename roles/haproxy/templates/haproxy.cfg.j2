@@ -1,6 +1,8 @@
 global
-  log /dev/log  local0
-  log /dev/log  local1 notice
+  log /dev/log local0
+  log /dev/log local1 notice
+  stats socket /var/lib/haproxy/stats mode 660 level admin expose-fd listeners
+  stats timeout 30s
   user haproxy
   group haproxy
   daemon
