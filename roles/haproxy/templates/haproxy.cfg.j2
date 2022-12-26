@@ -19,15 +19,18 @@ defaults
 
 frontend {{ haproxy__frontend_name }}
     bind {{ haproxy__frontend_bind_address }}:{{ haproxy__frontend_port }}
-    mode {{ haproxy__frontend_mode }}
+    mode http
     default_backend {{ haproxy__backend_name }}
 
 backend {{ haproxy__backend_name }}
-    mode {{ haproxy__backend_mode }}
+    mode http
     balance {{ haproxy__backend_balance_method }}
     option forwardfor
 {% if haproxy__backend_httpchk != '' %}
     option httpchk {{ haproxy__backend_httpchk }}
+{% endif %}
+{% if haproxy__backend_httpchk_expect != '' %}
+    http-check expect {{ haproxy__backend_httpchk_expect }}
 {% endif %}
     cookie SERVERID insert indirect
 {% for backend in haproxy__backend_servers %}

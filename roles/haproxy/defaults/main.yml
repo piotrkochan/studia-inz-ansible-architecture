@@ -4,18 +4,16 @@
 haproxy__frontend_name: test_frontend
 haproxy__frontend_bind_address: "*"
 haproxy__frontend_port: 80
-haproxy__frontend_mode: http
 
 # a backend to serwery odbierające ruch
 # do których kieruje je load balancer
 haproxy__backend_name: test_backend
-haproxy__backend_mode: http
 haproxy__backend_balance_method: roundrobin
 haproxy__backend_httpchk: "HEAD / HTTP/1.1\\r\\nHost:localhost"
 
 haproxy__backend_servers: []
-# - name: app1
-#   address: 192.168.0.1:80
-# - name: app2
-#   address: 192.168.0.2:80
+# - name: node1
+#   address: 10.10.0.1
+# - name: node2
+#   address: 10.10.0.2
 

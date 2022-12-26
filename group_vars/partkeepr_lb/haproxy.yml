@@ -5,12 +5,11 @@ app_node1_ip: "{{ hostvars['partkeepr1']['ansible_default_ipv4']['address'] }}"
 haproxy__frontend_name: partkeepr_frontend
 haproxy__frontend_bind_address: "*"
 haproxy__frontend_port: 80
-haproxy__frontend_mode: http
 
 haproxy__backend_name: partkeepr_backend
-haproxy__backend_mode: http
 haproxy__backend_balance_method: roundrobin
-haproxy__backend_httpchk: "HEAD /index.php HTTP/1.1\\r\\nHost:\ localhost"
+haproxy__backend_httpchk: "GET /"
+haproxy__backend_httpchk_expect: "status 200"
 
 haproxy__backend_servers:
   - name: node1
