@@ -2,7 +2,7 @@
 user = {{ item.pool_user }}
 group = {{ item.pool_group }}
 listen = {{ item.listen_address }}
-{% if item.listen_address.endsWith('.sock')  %}
+{% if item.listen_address | regex_search('sock$') %}
 listen.mode = 0660
 listen.owner = {{ item.pool_user }}
 listen.group = {{ item.pool_user }}
