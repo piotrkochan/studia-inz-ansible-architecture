@@ -1,0 +1,33 @@
+global
+  log /dev/log  local0
+  log /dev/log  local1 notice
+  user haproxy
+  group haproxy
+  daemon
+
+defaults
+  log global
+  mode http
+  option httplog
+  option dontlognull
+    
+  timeout connect  2000
+  timeout client 10000
+  timeout server 10000
+
+frontend {{ haproxy__frontend_name }}
+    bind {{ haproxy__frontend_bind_address }}:{{ haproxy__frontend_port }}
+    mode {{ haproxy__frontend_mode }}
+    default_backend {{ haproxy__backend_name }}
+
+backend {{ haproxy__backend_name }}
+    mode {{ haproxy__backend_mode }}
+    balance {{ haproxy__backend_balance_method }}
+    option forwardfor
+{% if haproxy__backend_httpchk != '' %}
+    option httpchk {{ haproxy__backend_httpchk }}
+{% endif %}
+    cookie SERVERID insert indirect
+{% for backend in haproxy__backend_servers %}
+    server {{ backend.name }} {{ backend.address }} cookie {{ backend.name }} check
+{% endfor %}

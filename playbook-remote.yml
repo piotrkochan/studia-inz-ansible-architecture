@@ -1,23 +1,29 @@
 ---
 
 - hosts: all
-  gather_facts: true
   become: true
+  pre_tasks:
+    - name: Gather facts from ALL hosts (regardless of limit or tags)
+      setup:
+      delegate_to: "{{ item }}"
+      delegate_facts: true
+      when: hostvars[item]['ansible_default_ipv4'] is not defined
+      with_items: "{{ groups['all'] }}"
   roles:
    - { role: yum }
    - { role: ntp, when: ntp__configure, tags: ['ntp'] }
 
-- hosts: symfony_app
+- hosts: partkeepr_app
   gather_facts: true
   become: true
   tags:
     - symfony
-    - symfony_app
+    - partkeepr
     - app
   roles:
    - { role: nodejs }
-  #  - { role: php }
-  #  - { role: apache2 }
+   - { role: php }
+   - { role: apache2 }
 
 - hosts: jenkins
   gather_facts: true

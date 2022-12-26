@@ -1,7 +1,7 @@
 ---
 
-- name: restart xtradb
+- name: restart haproxy
   service:
-    name: mysql
+    name: haproxy
     enabled: yes
     state: restarted
