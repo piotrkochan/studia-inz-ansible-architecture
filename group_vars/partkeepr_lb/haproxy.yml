@@ -1,6 +1,7 @@
 ---
 
 app_node1_ip: "{{ hostvars['partkeepr1']['ansible_default_ipv4']['address'] }}"
+app_node2_ip: "{{ hostvars['partkeepr2']['ansible_default_ipv4']['address'] }}"
 
 haproxy__frontend_name: partkeepr_frontend
 haproxy__frontend_bind_address: "*"
@@ -14,3 +15,6 @@ haproxy__backend_httpchk_expect: "status 200"
 haproxy__backend_servers:
   - name: node1
     address: "{{ app_node1_ip }}:80"
+  - name: node2
+    address: "{{ app_node2_ip }}:80"
+
