@@ -2,7 +2,6 @@
 
 - hosts: all
   become: true
-  gather_facts: false
   pre_tasks:
     - name: Gather facts from ALL hosts (regardless of limit or tags)
       setup:
