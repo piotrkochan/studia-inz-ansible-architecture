@@ -36,14 +36,6 @@
   roles:
    - { role: haproxy }
 
-- hosts: jenkins
-  gather_facts: false
-  become: true
-  tags:
-    - jenkins
-  roles:
-   - { role: jenkins }
-
 - hosts:
     - percona_partkeepr
   gather_facts: false
@@ -53,3 +45,11 @@
     - percona
   roles:
    - { role: percona }
+
+- hosts: jenkins
+  gather_facts: false
+  become: true
+  tags:
+    - jenkins
+  roles:
+   - { role: jenkins }
