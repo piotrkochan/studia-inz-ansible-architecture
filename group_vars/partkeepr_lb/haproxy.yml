@@ -10,7 +10,6 @@ haproxy__frontend_mode: http
 haproxy__backend_name: partkeepr_backend
 haproxy__backend_mode: http
 haproxy__backend_balance_method: roundrobin
-haproxy__backend_httpchk: "HEAD / HTTP/1.1\r\nHost:localhost"
 
 haproxy__backend_servers:
   - name: node1
