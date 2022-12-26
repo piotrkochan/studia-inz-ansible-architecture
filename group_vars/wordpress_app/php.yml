@@ -4,3 +4,4 @@ php__additional_packages:
   - pdo
   - mysql
   - zip
+  - psr
