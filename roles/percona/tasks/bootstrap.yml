@@ -19,7 +19,7 @@
     group: root
     mode: 0644
 
-- name: Start the master node
+- name: Bootstrap first node
   service:
     name: mysql@bootstrap.service
     state: started
