@@ -14,7 +14,7 @@
    - { role: ntp, when: ntp__configure, tags: ['ntp'] }
 
 - hosts: partkeepr_app
-  gather_facts: true
+  gather_facts: false
   become: true
   tags:
     - symfony
@@ -26,7 +26,7 @@
    - { role: apache2 }
 
 - hosts: partkeepr_lb
-  gather_facts: true
+  gather_facts: false
   become: true
   tags:
     - haproxy
@@ -37,7 +37,7 @@
    - { role: haproxy }
 
 - hosts: jenkins
-  gather_facts: true
+  gather_facts: false
   become: true
   tags:
     - jenkins
@@ -46,7 +46,7 @@
 
 - hosts:
     - percona_partkeepr
-  gather_facts: true
+  gather_facts: false
   become: true
   tags:
     - db
