@@ -3,7 +3,7 @@
 jenkins__job_dsl_scripts:
   - > 
     multibranchPipelineJob('ansible-playbooks') {
-      displayName('Ansible')
+      displayName('Ansible - konfigurowanie serwerów')
       triggers {
         cron('H/1 * * * *')
       }
