@@ -15,8 +15,9 @@
     - symfony_app
     - app
   roles:
-   - { role: php }
-   - { role: apache2 }
+   - { role: nodejs }
+  #  - { role: php }
+  #  - { role: apache2 }
 
 - hosts: jenkins
   gather_facts: true
