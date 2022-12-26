@@ -6,7 +6,21 @@
     state: present
   when: ansible_distribution_major_version | int < 7
 
-- name: Install NodeJS
+- name: Add nodesource repository
   yum:
-    name: "https://rpm.nodesource.com/pub_{{ nodejs__version | split('.') | first }}.x/el/7/x86_64/nodejs-{{ nodejs__version }}-1nodesource.x86_64.rpm"
+    name: "http://rpm.nodesource.com/pub_{{ nodejs__version }}/el/7/{{ ansible_architecture }}/nodesource-release-el7-1.noarch.rpm"
     state: present
+  when: ansible_distribution_major_version | int < 7
+  register: node_repo
+
+- name: Disable Node.js AppStream module
+  command: yum module disable -y nodejs
+  register: module_disable
+  changed_when: "'Nothing to do.' not in module_disable.stdout"
+  when: ansible_distribution_major_version | int >= 8
+
+- name: Ensure Node.js and npm are installed.
+  yum:
+    name: "nodejs-{{ nodejs__version | regex_replace('x', '') }}*"
+    state: present
+    enablerepo: nodesource
