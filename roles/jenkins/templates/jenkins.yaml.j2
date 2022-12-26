@@ -16,6 +16,11 @@ jenkins:
   markupFormatter:
     rawHtml:
       disableSyntaxHighlighting: false
+unclassified:
+{% if jenkins__public_url != "" %}
+  location:
+    url: "{{ jenkins__public_url }}"
+{% endif %}
 security:
   gitHostKeyVerificationConfiguration:
     sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"

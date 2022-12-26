@@ -7,6 +7,9 @@ jenkins__numExecutors: 2
 jenkins__anonymous_read: false
 jenkins__plugin_manager_tool_version: '2.12.9'
 
+# publiczny adres jenkinsa
+jenkins__public_url: ""
+
 jenkins__security_approved_signatures: []
 
 # do automatycznego konfigurowania jobów
