@@ -37,7 +37,7 @@
    - { role: haproxy }
 
 - hosts:
-    - percona_partkeepr
+    - percona
   gather_facts: false
   become: true
   tags:

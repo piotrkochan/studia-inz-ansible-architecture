@@ -1,0 +1,7 @@
+---
+
+# nazwa klastra
+percona__cluster_name: application-db
+
+# nazwa grupy hostow które mają być w klastrze percony
+percona__cluster_nodes_group_name: percona
