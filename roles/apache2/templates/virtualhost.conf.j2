@@ -17,6 +17,9 @@
     AllowOverride {{ item.allow_override | default(apache__allow_override) }}
     Options Indexes FollowSymLinks
     Require all granted
+{% if item.extra_documentroot_parameters is defined %}
+{{ item.extra_documentroot_parameters | indent(width=4, first=True) }}
+{% endif %}
   </Directory>
 {% endif %}
 
