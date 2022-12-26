@@ -25,7 +25,7 @@ apache__virtualhosts:
         RewriteCond %{REQUEST_FILENAME} -d
         RewriteRule ^(.*)$ - [S=1]
         RewriteRule . /index.php [L]
-    </IfModule>
+      </IfModule>
     extra_parameters: |
       <FilesMatch \.php$>
         SetHandler "proxy:unix:/run/php-fpm-pool.sock|fcgi://localhost/"
