@@ -21,3 +21,4 @@
     login_password: "{{ percona__root_password }}"
     state: present
   with_items: "{{ percona__users }}"
+  no_log: true
