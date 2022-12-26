@@ -25,6 +25,17 @@
    - { role: php }
    - { role: apache2 }
 
+- hosts: partkeepr_lb
+  gather_facts: true
+  become: true
+  tags:
+    - haproxy
+    - lb
+    - partkeepr
+    - app
+  roles:
+   - { role: haproxy }
+
 - hosts: jenkins
   gather_facts: true
   become: true
