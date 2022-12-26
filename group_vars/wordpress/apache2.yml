@@ -1,0 +1,35 @@
+---
+
+apache__mods_enabled:
+  - rewrite
+  - proxy
+  - proxy_fcgi
+
+apache__virtualhosts:
+  - servername: "wordpress"
+    serveralias: "*"
+    documentroot: /var/www/wordpress/current/public
+    extra_documentroot_parameters: |
+      DirectoryIndex index.php
+
+      <IfModule mod_negotiation.c>
+        Options -MultiViews
+      </IfModule>
+
+      <IfModule mod_rewrite.c>
+        RewriteEngine On
+        RewriteRule ^index\.php$ - [L]
+        RewriteCond $1 ^(index\.php)?$ [OR]
+        RewriteCond $1 \.(gif|jpg|png|ico|css|js)$ [NC,OR]
+        RewriteCond %{REQUEST_FILENAME} -f [OR]
+        RewriteCond %{REQUEST_FILENAME} -d
+        RewriteRule ^(.*)$ - [S=1]
+        RewriteRule . /index.php [L]
+    </IfModule>
+    extra_parameters: |
+      <FilesMatch \.php$>
+        SetHandler "proxy:unix:/run/php-fpm-pool.sock|fcgi://localhost/"
+      </FilesMatch>
+  
+      ErrorLog logs/wordpress-error.log
+      CustomLog logs/wordpress-access.log combined

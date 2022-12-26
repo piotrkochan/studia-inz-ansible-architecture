@@ -25,6 +25,16 @@
    - { role: php }
    - { role: apache2 }
 
+- hosts: wordpress_app
+  gather_facts: false
+  become: true
+  tags:
+    - wordpress
+    - app
+  roles:
+   - { role: php }
+   - { role: apache2 }
+
 - hosts: partkeepr_lb
   gather_facts: false
   become: true

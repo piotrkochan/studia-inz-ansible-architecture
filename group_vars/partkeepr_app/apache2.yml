@@ -2,7 +2,6 @@
 
 apache__mods_enabled:
   - rewrite
-  - ssl
   - proxy
   - proxy_fcgi
 
