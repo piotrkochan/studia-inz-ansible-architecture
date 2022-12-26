@@ -8,7 +8,7 @@ apache__mods_enabled:
 apache__virtualhosts:
   - servername: "wordpress"
     serveralias: "*"
-    documentroot: /var/www/wordpress/current/public
+    documentroot: /var/www/wordpress/current
     extra_documentroot_parameters: |
       DirectoryIndex index.php
 
