@@ -1,7 +1,7 @@
 ---
 
 # ilosc workerów w built-in node
-jenkins__numExecutors: 2
+jenkins__num_executors: 2
 
 # inne
 jenkins__anonymous_read: false
