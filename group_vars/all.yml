@@ -8,4 +8,4 @@ ansible_aws_ssm_region: eu-central-1
 
 # bucket potrzebny dla 
 # https://docs.ansible.com/ansible/latest/collections/community/aws/aws_ssm_connection.html
-ansible_aws_ssm_bucket_name: praca-inz-ansible-bucket
+ansible_aws_ssm_bucket_name: praca-inz-ansible
