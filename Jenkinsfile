@@ -23,6 +23,11 @@ pipeline {
             defaultValue: '',
             description: 'Specify the tags'
         )
+        booleanParam(
+            name: 'REQS_FORCE_INSTALL',
+            defaultValue: false,
+            description: 'Force requirements reinstall'
+        )
         choice(
             name: 'MODE',
             choices: ['check', 'run'],
@@ -63,7 +68,13 @@ pipeline {
         stage('Install requirements') {
             when { expression { return fileExists ('requirements.yml') } }
             steps {
-                sh '/usr/local/bin/ansible-galaxy install -r requirements.yml'
+                script {
+                    if (params.REQS_FORCE_INSTALL) {
+                        sh '/usr/local/bin/ansible-galaxy install --force -r requirements.yml'
+                    } else {
+                        sh '/usr/local/bin/ansible-galaxy install -r requirements.yml'
+                    }
+                }
             }
         }
         stage('Run Check') {
