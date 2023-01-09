@@ -5,7 +5,7 @@
 repository_url: https://git-codecommit.eu-central-1.amazonaws.com
 
 # repozytorium z playbookami infrastruktury
-ansible_repository_url: "{{ repository_url }}/v1/repos/ansible-repository"
+ansible_repository_url: "{{ repository_url }}/v1/repos/ansible-architecture"
 
 # repozytorium z playbookami do zarządzania wersjami aplikacji webowych
-ansible_deploy_repository_url: "{{ repository_url }}/v1/repos/ansible-deploy-repository"
+ansible_deploy_repository_url: "{{ repository_url }}/v1/repos/ansible-application-deploy"
