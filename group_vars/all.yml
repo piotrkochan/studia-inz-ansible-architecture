@@ -6,7 +6,6 @@
 ansible_connection: aws_ssm
 ansible_aws_ssm_region: eu-central-1
 
-# bucket potrzebny dla 
-# https://docs.ansible.com/ansible/latest/collections/community/aws/aws_ssm_connection.html
-# zawsze nalezy uzywać tego, który wypluwa "terraform apply"
-ansible_aws_ssm_bucket_name: ansible-ssm-b39416
+# bucket s3 jest potrzebny dla kolekcji community.aws
+ansible_aws_ssm_bucket_name: ansible-ssm-bucket
+ansible_aws_ssm_s3_addressing_style: path

@@ -75,6 +75,7 @@ pipeline {
                         sh '/usr/local/bin/ansible-galaxy install -r requirements.yml'
                     }
                 }
+                sh 'ls -halt /home/jenins'
             }
         }
         stage('Run Check') {
