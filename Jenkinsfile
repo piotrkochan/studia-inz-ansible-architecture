@@ -66,16 +66,14 @@ pipeline {
             }
         }
         stage('Install requirements') {
-            when { expression { return fileExists ('requirements.yml') } }
-            steps {
-                script {
-                    if (params.REQS_FORCE_INSTALL) {
-                        sh '/usr/local/bin/ansible-galaxy install --force -r requirements.yml'
-                    } else {
-                        sh '/usr/local/bin/ansible-galaxy install -r requirements.yml'
-                    }
+            when {
+                allOf {
+                    expression { return fileExists ('requirements.yml') }
+                    expression { return params.REQS_FORCE_INSTALL }
                 }
-                sh 'ls -halt /home/jenins'
+            }
+            steps {
+                sh '/usr/local/bin/ansible-galaxy install --force -r requirements.yml'
             }
         }
         stage('Run Check') {
